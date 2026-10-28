@@ -1,3 +1,4 @@
+import { supplyCommitment } from "@/lib/supply";
 import { getCategoryArtwork } from "@/lib/artwork";
 import { Questions } from "@/components/business-sections";
 import type { Metadata } from "next";
@@ -98,9 +99,7 @@ export default async function Materials({ params }: Props) {
             <Architecture {...getCategoryArtwork(cat!)} />
           )}
           <div>
-            <p className="status-tag">
-              Sourcing enquiry · availability to be established
-            </p>
+            <p className="status-tag">Project-specific material supply</p>
             <h2>Review your specification</h2>
             <p>
               Send your intended application, quantities, finish schedule and
@@ -132,9 +131,10 @@ export default async function Materials({ params }: Props) {
         </section>
         <section className="container prose-section">
           <h2>Technical information</h2>
+          <p>{supplyCommitment}</p>
           <p>
             {product.approvedPublicStatement ||
-              "Product specifications and technical documentation are confirmed for the selected material and intended application during project review."}
+              "Product certification and technical documentation are coordinated for the selected material and its intended application."}
           </p>
           {product.technicalDataSheet &&
             product.documentAccess === "approved-public" && (
@@ -174,10 +174,7 @@ export default async function Materials({ params }: Props) {
               "How do I request material pricing?",
               "Choose the relevant category or sourcing profile, then send your scope, quantities and project requirements using the pricing enquiry form.",
             ],
-            [
-              "Are these stock products?",
-              "These are sourcing categories and enquiry profiles. Availability, technical specifications and lead times are established for the selected material and project.",
-            ],
+            ["Australian installation", supplyCommitment],
           ]}
         />
         <ClosingCTA />
@@ -203,9 +200,8 @@ export default async function Materials({ params }: Props) {
           <div>
             <h2>Your project package</h2>
             <p>
-              Potential sourcing categories for discussion, subject to
-              availability, product suitability and evidence review. These are
-              material supply enquiries, not installation services.
+              {supplyCommitment} Material packages are coordinated around your
+              drawings, specifications and project programme.
             </p>
             <ul className="ruled-list">
               {cat.items.map((i) => (
@@ -239,10 +235,7 @@ export default async function Materials({ params }: Props) {
               "How do I request material pricing?",
               "Choose the relevant category or sourcing profile, then send your scope, quantities and project requirements using the pricing enquiry form.",
             ],
-            [
-              "Are these stock products?",
-              "These are sourcing categories and enquiry profiles. Availability, technical specifications and lead times are established for the selected material and project.",
-            ],
+            ["Australian installation", supplyCommitment],
           ]}
         />
         <ClosingCTA />
@@ -272,10 +265,7 @@ export default async function Materials({ params }: Props) {
             </Link>
           ))}
         </nav>
-        <p className="catalogue-notice">
-          A sourcing catalogue, subject to project review. Listings do not
-          confirm stock availability or product approval.
-        </p>
+        <p className="catalogue-notice">{supplyCommitment}</p>
         <Catalogue group={group} categories={categories} />
       </section>
       <Questions
@@ -284,10 +274,7 @@ export default async function Materials({ params }: Props) {
             "How do I request material pricing?",
             "Choose the relevant category or sourcing profile, then send your scope, quantities and project requirements using the pricing enquiry form.",
           ],
-          [
-            "Are these stock products?",
-            "These are sourcing categories and enquiry profiles. Availability, technical specifications and lead times are established for the selected material and project.",
-          ],
+          ["Australian installation", supplyCommitment],
         ]}
       />
       <ClosingCTA />

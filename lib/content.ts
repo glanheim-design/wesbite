@@ -21,7 +21,7 @@ export const groupInfo: Record<Group, { title: string; intro: string }> = {
   structural: {
     title: "Structural materials",
     intro:
-      "Project-led sourcing enquiries for selected structural components, subject to engineering, evidence and suitability review.",
+      "Selected structural components for Australian construction projects, coordinated to your engineering documentation and project specifications.",
   },
   bespoke: {
     title: "Bespoke materials",

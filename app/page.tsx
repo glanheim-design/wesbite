@@ -1,3 +1,4 @@
+import { supplyCommitment } from "@/lib/supply";
 import Link from "next/link";
 import { Architecture, Button, ClosingCTA } from "@/components/ui";
 import {
@@ -91,6 +92,7 @@ export default function Home() {
               technical information, manufacturing scope and delivery
               requirements. Our current offering is supply only.
             </p>
+            <p>{supplyCommitment}</p>
             <Link className="text-link" href="/project-packages">
               Explore project packages
             </Link>

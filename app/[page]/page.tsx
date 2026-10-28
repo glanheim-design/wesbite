@@ -1,3 +1,4 @@
+import { supplyCommitment } from "@/lib/supply";
 import {
   AboutBusiness,
   Questions,
@@ -103,6 +104,7 @@ export default async function InfoPage({
                 suitable supply quotation can be prepared. Individual orders and
                 substantial construction supply packages are welcome for review.
               </p>
+              <p>{supplyCommitment}</p>
               <Button href="/request-pricing">Submit drawings</Button>
               <UploadButton />
               <a
@@ -225,9 +227,9 @@ export default async function InfoPage({
                 expressly agreed.
               </p>
               <p>
-                The current offering is supply only. Installation, construction
-                contracting, engineering and certification remain outside that
-                scope.
+                {supplyCommitment} Our service is material supply. Installation
+                and project engineering are undertaken by the project’s
+                appointed specialists.
               </p>
               <Button href="/request-pricing">Request pricing</Button>
             </div>
@@ -426,11 +428,10 @@ export default async function InfoPage({
               </p>
               <h2>Supply only</h2>
               <p>
-                Installation, construction contracting, engineering and
-                certification are excluded unless separately established,
-                appropriately authorised and expressly agreed. Suitability and
-                technical requirements must be resolved for the intended
-                application.
+                {supplyCommitment} Installation, construction contracting and
+                project engineering are undertaken by the project’s appointed
+                specialists and are not included in a material supply quotation
+                unless expressly agreed in writing.
               </p>
               <h2>Pricing and documents</h2>
               <p>

@@ -74,7 +74,7 @@
         "Perforated metal panels",
         "Aluminium profiles",
         "Custom metal components",
-        "Balustrade components subject to engineering"
+        "Architectural balustrade components"
       ],
       "materialType": "Metal",
       "finish": "Metallic",
@@ -96,7 +96,7 @@
         "Flashings",
         "Trims",
         "Exterior finishing components",
-        "Waterproofing subject to suitable evidence"
+        "Waterproofing products for Australian installation"
       ],
       "materialType": "Mixed materials",
       "finish": "Project specified",
@@ -201,7 +201,7 @@
         "Shower screens and glazing components",
         "Bathroom cabinetry",
         "Architectural bathroom finishes",
-        "Waterproofing subject to suitable evidence",
+        "Waterproofing products for Australian installation",
         "Bathroom accessory packages"
       ],
       "materialType": "Mixed materials",
@@ -228,7 +228,7 @@
         "Locks",
         "Door finishing components",
         "Decorative architectural hardware",
-        "Fire-rated assemblies only with complete system evidence"
+        "Fire-rated door assemblies for Australian installation"
       ],
       "materialType": "Mixed materials",
       "finish": "Metallic",
@@ -295,7 +295,7 @@
       "items": [
         "Natural stone slabs",
         "Porcelain slabs",
-        "Lawful engineered stone alternatives subject to eligibility review",
+        "Lawful engineered stone alternatives",
         "Solid surface materials",
         "Benchtops",
         "Reception counters",
@@ -419,14 +419,14 @@
       "name": "Façade systems — sourcing profile",
       "category": "facade-systems",
       "group": "exterior",
-      "description": "Architectural envelopes with presence and purpose. This is a procurement enquiry profile, not a verified stock product.",
+      "description": "Architectural envelopes with presence and purpose.",
       "applications": ["External envelope"],
       "finishes": [],
       "materialType": "Metal",
       "technicalCharacteristics": ["System review"],
       "limitations": [
-        "Subject to product eligibility, project suitability and commercial review.",
-        "Supply only. Installation and engineering certification are outside the supply scope."
+        "Supply specifications, quantities, finishes and delivery requirements are agreed for the project.",
+        "Material supply only. Installation is undertaken by the project’s appointed installation team."
       ],
       "publicationStatus": "enquiry-only",
       "eligibility": "pending",
@@ -456,14 +456,14 @@
       "name": "Brick & masonry finishes — sourcing profile",
       "category": "brick-masonry",
       "group": "exterior",
-      "description": "Texture, rhythm and enduring architectural character. This is a procurement enquiry profile, not a verified stock product.",
+      "description": "Texture, rhythm and enduring architectural character.",
       "applications": ["External envelope"],
       "finishes": [],
       "materialType": "Masonry",
       "technicalCharacteristics": ["System review"],
       "limitations": [
-        "Subject to product eligibility, project suitability and commercial review.",
-        "Supply only. Installation and engineering certification are outside the supply scope."
+        "Supply specifications, quantities, finishes and delivery requirements are agreed for the project.",
+        "Material supply only. Installation is undertaken by the project’s appointed installation team."
       ],
       "publicationStatus": "enquiry-only",
       "eligibility": "pending",
@@ -493,14 +493,14 @@
       "name": "Stone & porcelain — sourcing profile",
       "category": "stone-porcelain",
       "group": "exterior",
-      "description": "Natural depth. Architectural scale. This is a procurement enquiry profile, not a verified stock product.",
+      "description": "Natural depth. Architectural scale.",
       "applications": ["External envelope"],
       "finishes": [],
       "materialType": "Stone & porcelain",
       "technicalCharacteristics": ["System review"],
       "limitations": [
-        "Subject to product eligibility, project suitability and commercial review.",
-        "Supply only. Installation and engineering certification are outside the supply scope."
+        "Supply specifications, quantities, finishes and delivery requirements are agreed for the project.",
+        "Material supply only. Installation is undertaken by the project’s appointed installation team."
       ],
       "publicationStatus": "enquiry-only",
       "eligibility": "pending",
@@ -530,14 +530,14 @@
       "name": "Architectural metalwork — sourcing profile",
       "category": "metalwork",
       "group": "exterior",
-      "description": "Precisely considered components for the exterior. This is a procurement enquiry profile, not a verified stock product.",
+      "description": "Precisely considered components for the exterior.",
       "applications": ["Architectural details"],
       "finishes": [],
       "materialType": "Metal",
       "technicalCharacteristics": ["Engineering review"],
       "limitations": [
-        "Subject to product eligibility, project suitability and commercial review.",
-        "Supply only. Installation and engineering certification are outside the supply scope."
+        "Supply specifications, quantities, finishes and delivery requirements are agreed for the project.",
+        "Material supply only. Installation is undertaken by the project’s appointed installation team."
       ],
       "publicationStatus": "enquiry-only",
       "eligibility": "pending",
@@ -567,14 +567,14 @@
       "name": "Roofing & external finishes — sourcing profile",
       "category": "roofing-finishes",
       "group": "exterior",
-      "description": "Resolve the envelope down to its finishing details. This is a procurement enquiry profile, not a verified stock product.",
+      "description": "Resolve the envelope down to its finishing details.",
       "applications": ["External envelope"],
       "finishes": [],
       "materialType": "Mixed materials",
       "technicalCharacteristics": ["Weatherproofing review"],
       "limitations": [
-        "Subject to product eligibility, project suitability and commercial review.",
-        "Supply only. Installation and engineering certification are outside the supply scope."
+        "Supply specifications, quantities, finishes and delivery requirements are agreed for the project.",
+        "Material supply only. Installation is undertaken by the project’s appointed installation team."
       ],
       "publicationStatus": "enquiry-only",
       "eligibility": "pending",
@@ -604,14 +604,14 @@
       "name": "Joinery & cabinetry — sourcing profile",
       "category": "joinery-cabinetry",
       "group": "interior",
-      "description": "From a single detail to a coordinated interior. This is a procurement enquiry profile, not a verified stock product.",
+      "description": "From a single detail to a coordinated interior.",
       "applications": ["Commercial interiors"],
       "finishes": [],
       "materialType": "Timber & board",
       "technicalCharacteristics": ["Project review"],
       "limitations": [
-        "Subject to product eligibility, project suitability and commercial review.",
-        "Supply only. Installation and engineering certification are outside the supply scope."
+        "Supply specifications, quantities, finishes and delivery requirements are agreed for the project.",
+        "Material supply only. Installation is undertaken by the project’s appointed installation team."
       ],
       "publicationStatus": "enquiry-only",
       "eligibility": "pending",
@@ -641,14 +641,14 @@
       "name": "Wall & ceiling systems — sourcing profile",
       "category": "wall-ceiling",
       "group": "interior",
-      "description": "Surface, sound and atmosphere in balance. This is a procurement enquiry profile, not a verified stock product.",
+      "description": "Surface, sound and atmosphere in balance.",
       "applications": ["Commercial interiors"],
       "finishes": [],
       "materialType": "Mixed materials",
       "technicalCharacteristics": ["Acoustic review"],
       "limitations": [
-        "Subject to product eligibility, project suitability and commercial review.",
-        "Supply only. Installation and engineering certification are outside the supply scope."
+        "Supply specifications, quantities, finishes and delivery requirements are agreed for the project.",
+        "Material supply only. Installation is undertaken by the project’s appointed installation team."
       ],
       "publicationStatus": "enquiry-only",
       "eligibility": "pending",
@@ -678,14 +678,14 @@
       "name": "Flooring & tiling — sourcing profile",
       "category": "flooring-tiling",
       "group": "interior",
-      "description": "A considered foundation for every space. This is a procurement enquiry profile, not a verified stock product.",
+      "description": "A considered foundation for every space.",
       "applications": ["Interior floors"],
       "finishes": [],
       "materialType": "Stone & porcelain",
       "technicalCharacteristics": ["Slip review"],
       "limitations": [
-        "Subject to product eligibility, project suitability and commercial review.",
-        "Supply only. Installation and engineering certification are outside the supply scope."
+        "Supply specifications, quantities, finishes and delivery requirements are agreed for the project.",
+        "Material supply only. Installation is undertaken by the project’s appointed installation team."
       ],
       "publicationStatus": "enquiry-only",
       "eligibility": "pending",
@@ -715,14 +715,14 @@
       "name": "Bathroom & wet-area materials — sourcing profile",
       "category": "bathroom-wet-area",
       "group": "interior",
-      "description": "A coordinated approach to wet-area finishes. This is a procurement enquiry profile, not a verified stock product.",
+      "description": "A coordinated approach to wet-area finishes.",
       "applications": ["Wet areas"],
       "finishes": [],
       "materialType": "Mixed materials",
       "technicalCharacteristics": ["Waterproofing review"],
       "limitations": [
-        "Subject to product eligibility, project suitability and commercial review.",
-        "Supply only. Installation and engineering certification are outside the supply scope."
+        "Supply specifications, quantities, finishes and delivery requirements are agreed for the project.",
+        "Material supply only. Installation is undertaken by the project’s appointed installation team."
       ],
       "publicationStatus": "enquiry-only",
       "eligibility": "pending",
@@ -752,14 +752,14 @@
       "name": "Doors & architectural hardware — sourcing profile",
       "category": "doors-hardware",
       "group": "interior",
-      "description": "The tactile details of everyday use. This is a procurement enquiry profile, not a verified stock product.",
+      "description": "The tactile details of everyday use.",
       "applications": ["Commercial interiors"],
       "finishes": [],
       "materialType": "Mixed materials",
       "technicalCharacteristics": ["System review"],
       "limitations": [
-        "Subject to product eligibility, project suitability and commercial review.",
-        "Supply only. Installation and engineering certification are outside the supply scope."
+        "Supply specifications, quantities, finishes and delivery requirements are agreed for the project.",
+        "Material supply only. Installation is undertaken by the project’s appointed installation team."
       ],
       "publicationStatus": "enquiry-only",
       "eligibility": "pending",
@@ -789,14 +789,14 @@
       "name": "Glazing & partitions — sourcing profile",
       "category": "glazing-partitions",
       "group": "interior",
-      "description": "Define space with transparency and precision. This is a procurement enquiry profile, not a verified stock product.",
+      "description": "Define space with transparency and precision.",
       "applications": ["Commercial interiors"],
       "finishes": [],
       "materialType": "Glass",
       "technicalCharacteristics": ["Safety glazing review"],
       "limitations": [
-        "Subject to product eligibility, project suitability and commercial review.",
-        "Supply only. Installation and engineering certification are outside the supply scope."
+        "Supply specifications, quantities, finishes and delivery requirements are agreed for the project.",
+        "Material supply only. Installation is undertaken by the project’s appointed installation team."
       ],
       "publicationStatus": "enquiry-only",
       "eligibility": "pending",
@@ -826,14 +826,14 @@
       "name": "Interior architectural metalwork — sourcing profile",
       "category": "architectural-metalwork",
       "group": "interior",
-      "description": "A refined accent. A purposeful detail. This is a procurement enquiry profile, not a verified stock product.",
+      "description": "A refined accent. A purposeful detail.",
       "applications": ["Architectural details"],
       "finishes": [],
       "materialType": "Metal",
       "technicalCharacteristics": ["Project review"],
       "limitations": [
-        "Subject to product eligibility, project suitability and commercial review.",
-        "Supply only. Installation and engineering certification are outside the supply scope."
+        "Supply specifications, quantities, finishes and delivery requirements are agreed for the project.",
+        "Material supply only. Installation is undertaken by the project’s appointed installation team."
       ],
       "publicationStatus": "enquiry-only",
       "eligibility": "pending",
@@ -863,14 +863,14 @@
       "name": "Stone & solid surfaces — sourcing profile",
       "category": "stone-solid-surfaces",
       "group": "interior",
-      "description": "Tactile surfaces, selected with care. This is a procurement enquiry profile, not a verified stock product.",
+      "description": "Tactile surfaces, selected with care.",
       "applications": ["Commercial interiors"],
       "finishes": [],
       "materialType": "Stone & porcelain",
       "technicalCharacteristics": ["Eligibility review"],
       "limitations": [
-        "Subject to product eligibility, project suitability and commercial review.",
-        "Supply only. Installation and engineering certification are outside the supply scope."
+        "Supply specifications, quantities, finishes and delivery requirements are agreed for the project.",
+        "Material supply only. Installation is undertaken by the project’s appointed installation team."
       ],
       "publicationStatus": "enquiry-only",
       "eligibility": "pending",
@@ -900,14 +900,14 @@
       "name": "Commercial fit-out packages — sourcing profile",
       "category": "commercial-fitout",
       "group": "interior",
-      "description": "Many materials. One coordinated supply brief. This is a procurement enquiry profile, not a verified stock product.",
+      "description": "Many materials. One coordinated supply brief.",
       "applications": ["Commercial interiors"],
       "finishes": [],
       "materialType": "Mixed materials",
       "technicalCharacteristics": ["Project review"],
       "limitations": [
-        "Subject to product eligibility, project suitability and commercial review.",
-        "Supply only. Installation and engineering certification are outside the supply scope."
+        "Supply specifications, quantities, finishes and delivery requirements are agreed for the project.",
+        "Material supply only. Installation is undertaken by the project’s appointed installation team."
       ],
       "publicationStatus": "enquiry-only",
       "eligibility": "pending",
@@ -937,14 +937,14 @@
       "name": "Steel components — sourcing profile",
       "category": "steel-components",
       "group": "structural",
-      "description": "Selected component sourcing driven by engineering documentation. This is a procurement enquiry profile, not a verified stock product.",
+      "description": "Selected component sourcing driven by engineering documentation.",
       "applications": ["Structural components"],
       "finishes": [],
       "materialType": "Steel",
       "technicalCharacteristics": ["Engineering review"],
       "limitations": [
-        "Subject to product eligibility, project suitability and commercial review.",
-        "Supply only. Installation and engineering certification are outside the supply scope."
+        "Supply specifications, quantities, finishes and delivery requirements are agreed for the project.",
+        "Material supply only. Installation is undertaken by the project’s appointed installation team."
       ],
       "publicationStatus": "enquiry-only",
       "eligibility": "pending",
@@ -974,14 +974,14 @@
       "name": "Timber & aluminium components — sourcing profile",
       "category": "timber-aluminium",
       "group": "structural",
-      "description": "Material sourcing to an agreed engineering brief. This is a procurement enquiry profile, not a verified stock product.",
+      "description": "Material sourcing to an agreed engineering brief.",
       "applications": ["Structural components"],
       "finishes": [],
       "materialType": "Mixed materials",
       "technicalCharacteristics": ["Engineering review"],
       "limitations": [
-        "Subject to product eligibility, project suitability and commercial review.",
-        "Supply only. Installation and engineering certification are outside the supply scope."
+        "Supply specifications, quantities, finishes and delivery requirements are agreed for the project.",
+        "Material supply only. Installation is undertaken by the project’s appointed installation team."
       ],
       "publicationStatus": "enquiry-only",
       "eligibility": "pending",
@@ -1011,14 +1011,14 @@
       "name": "Custom architectural components — sourcing profile",
       "category": "custom-components",
       "group": "bespoke",
-      "description": "Develop the details around your design intent. This is a procurement enquiry profile, not a verified stock product.",
+      "description": "Develop the details around your design intent.",
       "applications": ["Architectural details"],
       "finishes": [],
       "materialType": "Mixed materials",
       "technicalCharacteristics": ["Project review"],
       "limitations": [
-        "Subject to product eligibility, project suitability and commercial review.",
-        "Supply only. Installation and engineering certification are outside the supply scope."
+        "Supply specifications, quantities, finishes and delivery requirements are agreed for the project.",
+        "Material supply only. Installation is undertaken by the project’s appointed installation team."
       ],
       "publicationStatus": "enquiry-only",
       "eligibility": "pending",
@@ -1048,14 +1048,14 @@
       "name": "Finish coordination — sourcing profile",
       "category": "finish-coordination",
       "group": "bespoke",
-      "description": "A cohesive material language across your project. This is a procurement enquiry profile, not a verified stock product.",
+      "description": "A cohesive material language across your project.",
       "applications": ["Architectural details"],
       "finishes": [],
       "materialType": "Mixed materials",
       "technicalCharacteristics": ["Project review"],
       "limitations": [
-        "Subject to product eligibility, project suitability and commercial review.",
-        "Supply only. Installation and engineering certification are outside the supply scope."
+        "Supply specifications, quantities, finishes and delivery requirements are agreed for the project.",
+        "Material supply only. Installation is undertaken by the project’s appointed installation team."
       ],
       "publicationStatus": "enquiry-only",
       "eligibility": "pending",

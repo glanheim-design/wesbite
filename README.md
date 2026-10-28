@@ -153,3 +153,9 @@ Interactive features include a package builder that carries selected categories 
 Run `node .agents/skills/design-taste-frontend/scripts/lint.mjs app components lib` for the source design check. The full inspector requires an installed Chromium that can launch in the environment. Local inspection outputs belong in ignored `.taste-skill/`.
 
 The material palette now maps a distinct image to each of its 18 categories. Examples include an office suspended ceiling grid, a reception desk, glass partitions, tile flooring, bathroom finishes, standing-seam roofing and exposed steel. No image captions or project labels are rendered, as requested by the owner. Their provenance remains in the image fields of `content/catalogue.json`. No third-party designer’s images were copied. The skill’s open-collection searches could not connect, including a retry through the configured proxy; tailored generated assets were used instead.
+
+## Australian product supply commitment
+
+At the owner’s instruction, public copy states: “All products supplied by GLANHEIM will be certified for Australian installation and meet the Australian construction standards applicable to their intended use.” The commitment is shared through `lib/supply.ts` and used across the home, company, procurement, package and material pages.
+
+This is the business’s forward-looking supply commitment. Internal product records and evidence controls continue to hold the actual certificate, issuer, scope and application information. No certificate identifiers or specialist approvals have been invented or marked as reviewed without documentation. Product certification is distinguished from the separate service of undertaking project engineering or installation.

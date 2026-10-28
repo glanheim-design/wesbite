@@ -1,15 +1,17 @@
+import { supplyCommitment } from "@/lib/supply";
 import Link from "next/link";
 import { Architecture, Button, ClosingCTA } from "./ui";
 import { AudienceSelector } from "./project-tools";
 import { processSteps } from "@/lib/content";
 export const commonQuestions = [
+  ["Australian installation", supplyCommitment],
   [
     "Can I submit a complete package?",
     "Yes. Send drawings, specifications, BOQs and finish schedules for an individual material or a mixed supply package. We assess whether the scope is suitable for a quotation.",
   ],
   [
     "Do you provide installation?",
-    "The current offering is material supply only. Installation, construction contracting, engineering and certification are not included. Project responsibilities and exclusions are agreed before any supply commitment.",
+    "All products supplied will be certified for Australian installation and meet the Australian construction standards applicable to their intended use. Our service is material supply; installation and project engineering are undertaken by the project’s appointed specialists.",
   ],
   [
     "Can you consider alternatives?",
@@ -108,8 +110,8 @@ export function AboutBusiness() {
             information needed to prepare a quotation.
           </p>
           <p>
-            We work on a supply-only basis. We do not present ourselves as the
-            project’s builder, installer, engineer or certifier.
+            {supplyCommitment} We coordinate material supply, with installation
+            undertaken by the project’s appointed team.
           </p>
           <Button href="/request-pricing">Discuss your project</Button>
         </div>
@@ -154,8 +156,9 @@ export function AboutBusiness() {
           <h2>What we supply</h2>
           <p>
             Material enquiries can range from a single architectural finish to a
-            coordinated package. Availability and suitability are established
-            against the specific product and project.
+            coordinated package. Every supply package follows our commitment to
+            certified products for Australian installation and applicable
+            Australian construction standards.
           </p>
           <ul className="supply-links">
             <li>
@@ -212,15 +215,14 @@ export function AboutBusiness() {
           <div>
             <h3>What remains project-led</h3>
             <p>
-              Design decisions, specialist engineering, certification,
-              installation and site responsibilities remain with the relevant
-              project parties. Technical documentation must relate to the
-              proposed material and application.
+              GLANHEIM supplies certified products for Australian installation.
+              Design decisions, project engineering, installation and site
+              responsibilities remain with the relevant project parties. Product
+              documentation is coordinated for the agreed application.
             </p>
             <p>
-              We do not promise stock availability, lead times, pricing or
-              performance until they have been established for the selected
-              package.
+              Quantities, finishes, pricing and delivery dates are set out in
+              the project quotation and supply agreement.
             </p>
           </div>
         </div>
