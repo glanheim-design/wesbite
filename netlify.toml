@@ -1,0 +1,9 @@
+[build]
+  command = "npm run content:check && npm run build"
+  publish = ".next"
+[build.environment]
+  NODE_VERSION = "24"
+[[headers]]
+  for = "/api/*"
+  [headers.values]
+    Cache-Control = "no-store"
