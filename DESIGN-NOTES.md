@@ -65,3 +65,7 @@ Every final inspector screenshot for the homepage, About Us and material palette
 Production build and TypeScript checking passed, as did ESLint, content/image validation, eight service/content tests and 34 desktop/mobile Playwright checks. Browser checks cover all public routes, accessible main pages, the larger navigation at 320/390/768/1440 pixels, category images, filtering, selection carry-through, disclosure controls, generic company copy, form validation, failure fallback and signed receipt templates. A crawl of 50 pages checked 97 distinct internal destinations with zero broken links.
 
 Live Resend delivery, Dropbox uploads and Netlify deployment are separate from local validation. No external email or upload test is claimed. Follow `README.md` and `LAUNCH-CHECKLIST.md` before enabling automated enquiries or representing supplier-specific product information as verified.
+
+## Subsequent copy preference
+
+The owner requested restoration of the original homepage headline, “Materials without compromise.” The existing layout, typography, green PDF logo and remaining content are retained. This owner-supplied headline takes precedence over the earlier two-word trial headline and the skill’s preferred headline length.

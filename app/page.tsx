@@ -11,7 +11,7 @@ export default function Home() {
     <>
       <section className="home-hero container">
         <div className="hero-heading">
-          <h1>Materials, considered.</h1>
+          <h1>Materials without compromise.</h1>
           <div>
             <p>
               Architectural materials and project-specific supply packages for
