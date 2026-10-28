@@ -34,7 +34,7 @@ export default function Header() {
         className="brand"
       >
         <Image
-          src="/brand/logo-white.svg"
+          src="/brand/logo-primary.svg"
           width={280}
           height={57}
           alt="GLANHEIM"

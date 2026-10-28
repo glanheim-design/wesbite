@@ -50,7 +50,7 @@ export default function RootLayout({
             <div className="footer-top">
               <Link href="/" aria-label="GLANHEIM home">
                 <Image
-                  src="/brand/logo-white.svg"
+                  src="/brand/logo-primary.svg"
                   alt="GLANHEIM"
                   width={360}
                   height={75}
@@ -92,7 +92,7 @@ export default function RootLayout({
               name: "GLANHEIM",
               url: siteUrl,
               email: "info@glanheim.com",
-              logo: siteUrl + "/brand/logo-white.svg",
+              logo: siteUrl + "/brand/logo-primary.svg",
               areaServed: "AU",
               description:
                 "Architectural materials sourcing and supply for Australian construction projects.",

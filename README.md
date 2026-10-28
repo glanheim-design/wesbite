@@ -10,7 +10,7 @@ GLANHEIM is presented as an Australian architectural materials sourcing and supp
 
 - All main navigation pages, legal drafts, custom 404 and signed enquiry receipt page.
 - Four material collections, 18 category pages and 18 **enquiry-only sourcing profiles** with searchable, combinable catalogue filters. These are not invented verified stock products.
-- Trial green-on-white logo derived from the supplied PDF. The wordmark, intertwined monogram and frame are preserved; the slogan is removed from the logo. The original assets remain available for reverting the trial.
+- Primary green-background logo derived from the supplied PDF. The wordmark, intertwined monogram and frame are preserved; the slogan is removed from the logo. The original assets remain available for reverting the trial.
 - Business-led About Us page describes how experience in Australia, New Zealand and the UK shaped the company’s founding and intended approach to clients. No founder name, military biography or Caribbean references appear in the public page.
 - Static marketing/category/profile generation; dynamic enquiry page and API. Unique metadata, canonical URLs, sitemap, robots, social sharing image, Organization schema, semantic structure and mobile navigation.
 - Server validation, payload limits, origin checks, honeypot and timing checks, distributed atomic rate limiting, private metadata persistence, idempotent notifications, visible error fallback and cryptographically signed receipt cookies.
@@ -146,7 +146,7 @@ See `LAUNCH-CHECKLIST.md`. An implemented integration and passing tests with tes
 
 Installed via the requested `npx skills add Leonxlnx/taste-skill` command (noninteractive Codex project installation). The skill lives at `.agents/skills/design-taste-frontend/SKILL.md` and its version is recorded in `skills-lock.json`. Vendored skill scripts are excluded from application ESLint; they are development tooling, not website runtime code.
 
-The direction is “Photographs at uneven sizes”, seed 2075853245, keeping the green brand and type. White is the user-requested ground. No external photograph or video licence is asserted: new material and architectural images are generated concept illustrations and are recorded as concept assets in this README and the content records. They are not completed projects or verified supplier photographs. No unrelated footage was added.
+The direction is “Photographs at uneven sizes”, seed 2075853245, keeping the green brand and type. White is the page ground; the primary logo uses the supplied green-background variant. No external photograph or video licence is asserted: new material and architectural images are generated concept illustrations and are recorded as concept assets in this README and the content records. They are not completed projects or verified supplier photographs. No unrelated footage was added.
 
 Interactive features include a package builder that carries selected categories into the real enquiry, service-role selection on Home and About Us, expandable supply stages and questions, catalogue search/filters, and page contents links. Existing enquiry validation and fail-closed integration behaviour are retained. Main navigation and collection controls use larger readable labels and touch targets, with a mobile menu on smaller screens.
 

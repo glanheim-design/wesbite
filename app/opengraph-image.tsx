@@ -7,7 +7,7 @@ export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 export default async function OG() {
   const svg = await readFile(
-    path.join(process.cwd(), "public/brand/logo-white.svg"),
+    path.join(process.cwd(), "public/brand/logo-primary.svg"),
     "utf8",
   );
   return new ImageResponse(

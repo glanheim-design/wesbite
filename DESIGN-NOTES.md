@@ -4,7 +4,7 @@ Implemented with the requested [Taste skill](.agents/skills/design-taste-fronten
 
 ## Direction and idea
 
-“Photographs at uneven sizes”, seed **2075853245**. No redraws. The existing green brand and two type families were retained; the owner requested white as the ground and a green-on-white logo with its slogan removed. The supplied wordmark, intertwined monogram and frame are preserved as vectors, with no generative redraw of the logo.
+“Photographs at uneven sizes”, seed **2075853245**. No redraws. The existing green brand and two type families were retained; the page ground is white. The owner subsequently selected the green-background logo from the PDF, with its slogan removed. The supplied wordmark, intertwined monogram and frame are preserved as vectors, with no generative redraw of the logo.
 
 On this site, GLANHEIM’s drawing-led material package becomes a visitor-built supply brief. The working package selector carries categories into the enquiry. A role selector gives relevant information to builders, estimators, designers, developers and specialist trades. Expandable supply stages, questions, page contents and the existing searchable catalogue make the content navigable by mouse, touch and keyboard.
 

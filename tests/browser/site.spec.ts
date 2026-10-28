@@ -368,15 +368,15 @@ test("package builder carries selected materials into the real enquiry", async (
   ).toBeChecked();
 });
 
-test("trial logo has a white ground and no slogan, process disclosures work", async ({
+test("primary logo uses the supplied artwork without a slogan, process disclosures work", async ({
   page,
 }) => {
   await page.goto("/procurement");
   await expect(page.locator(".brand img")).toHaveAttribute(
     "src",
-    "/brand/logo-white.svg",
+    "/brand/logo-primary.svg",
   );
-  const svg = await (await page.request.get("/brand/logo-white.svg")).text();
+  const svg = await (await page.request.get("/brand/logo-primary.svg")).text();
   expect(svg).not.toContain("font_11_");
   await expect(
     page.locator(".process-disclosures details").first(),
