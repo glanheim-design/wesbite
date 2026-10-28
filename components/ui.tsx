@@ -28,16 +28,18 @@ export function Button({
 export function Architecture({
   className = "",
   priority = false,
+  src = "/images/architecture.webp",
   alt = "Illustrative architectural concept: limestone courtyard, timber screening and an olive tree",
 }: {
   className?: string;
+  src?: string;
   priority?: boolean;
   alt?: string;
 }) {
   return (
     <div className={`architecture ${className}`}>
       <Image
-        src="/images/architecture.webp"
+        src={src}
         alt={alt}
         fill
         priority={priority}
@@ -63,17 +65,14 @@ export function UploadButton({ light = false }: { light?: boolean }) {
   );
 }
 export function PageIntro({
-  eyebrow,
   title,
   children,
 }: {
-  eyebrow: string;
   title: string;
   children?: React.ReactNode;
 }) {
   return (
     <section className="page-intro container">
-      <p className="eyebrow">{eyebrow}</p>
       <h1>{title}</h1>
       {children && <div className="intro-copy">{children}</div>}
     </section>
@@ -82,13 +81,8 @@ export function PageIntro({
 export function ClosingCTA() {
   return (
     <section className="closing container">
-      <p className="eyebrow">THE NEXT STEP</p>
       <div className="closing-grid">
-        <h2>
-          Your project.
-          <br />
-          <em>Our next conversation.</em>
-        </h2>
+        <h2>Discuss your project</h2>
         <div>
           <p>Send us your drawings. Let’s discuss your material package.</p>
           <Button href="/request-pricing">Request project pricing</Button>

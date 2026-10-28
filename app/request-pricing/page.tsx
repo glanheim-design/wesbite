@@ -12,10 +12,7 @@ export const dynamic = "force-dynamic";
 export default function Pricing() {
   return (
     <>
-      <PageIntro
-        eyebrow="PROJECT-SPECIFIC SUPPLY ENQUIRIES"
-        title="Every project starts with a conversation."
-      >
+      <PageIntro title="Request project pricing">
         <p>
           Send us your drawings. Tell us what you need. We’ll review the
           material package and discuss the possibilities.

@@ -2,12 +2,12 @@ import { ImageResponse } from "next/og";
 import { readFile } from "node:fs/promises";
 import path from "node:path";
 export const alt =
-  "GLANHEIM — Curators of Distinction. Architectural materials and project-specific procurement.";
+  "GLANHEIM. Architectural materials and project-specific procurement.";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 export default async function OG() {
   const svg = await readFile(
-    path.join(process.cwd(), "public/brand/logo-green.svg"),
+    path.join(process.cwd(), "public/brand/logo-white.svg"),
     "utf8",
   );
   return new ImageResponse(
@@ -15,8 +15,8 @@ export default async function OG() {
       style={{
         width: "100%",
         height: "100%",
-        background: "#183D32",
-        color: "#F6F4EF",
+        background: "#FFFFFF",
+        color: "#183D32",
         display: "flex",
         flexDirection: "column",
         justifyContent: "space-between",

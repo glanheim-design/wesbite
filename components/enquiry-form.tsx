@@ -77,6 +77,12 @@ export default function EnquiryForm({
     submissionId,
     startedAt,
     selectedProduct: (params.get("product") || "").slice(0, 300),
+    position: (params.get("role") || "").slice(0, 120),
+    packages: params
+      .getAll("material")
+      .filter((v): v is (typeof packageOptions)[number] =>
+        packageOptions.includes(v as (typeof packageOptions)[number]),
+      ),
     selectedCategory: (params.get("package") || "").slice(0, 200),
   }));
   const [step, setStep] = useState(0);
@@ -249,7 +255,7 @@ export default function EnquiryForm({
                 disabled={i > step || busy}
                 aria-current={i === step ? "step" : undefined}
               >
-                <span>{i < step ? "✓" : `0${i + 1}`}</span>
+                <span>{i < step ? "Done" : String(i + 1)}</span>
                 {s}
               </button>
             </li>

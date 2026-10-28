@@ -10,8 +10,8 @@ GLANHEIM is presented as an Australian architectural materials sourcing and supp
 
 - All main navigation pages, legal drafts, custom 404 and signed enquiry receipt page.
 - Four material collections, 18 category pages and 18 **enquiry-only sourcing profiles** with searchable, combinable catalogue filters. These are not invented verified stock products.
-- Exact logo artwork extracted as SVG paths from the supplied PDF, including the supplied wordmark, monogram and “CURATORS OF DISTINCTION.” tagline. The supplied horizontal logo has its monogram on the right; it was preserved instead of redrawing a new left-hand G.
-- Relevant founder construction background and founding values adapted from the supplied PDF. Older 2025 launch statements, lifestyle concierge services, 24/7 promises and publication plans are deliberately omitted from the current materials supply offering.
+- Trial green-on-white logo derived from the supplied PDF. The wordmark, intertwined monogram and frame are preserved; the slogan is removed from the logo. The original assets remain available for reverting the trial.
+- Business-led About Us page describes how experience in Australia, New Zealand and the UK shaped the company’s founding and intended approach to clients. No founder name, military biography or Caribbean references appear in the public page.
 - Static marketing/category/profile generation; dynamic enquiry page and API. Unique metadata, canonical URLs, sitemap, robots, social sharing image, Organization schema, semantic structure and mobile navigation.
 - Server validation, payload limits, origin checks, honeypot and timing checks, distributed atomic rate limiting, private metadata persistence, idempotent notifications, visible error fallback and cryptographically signed receipt cookies.
 
@@ -117,8 +117,8 @@ Edit `content/catalogue.json` through a private GitHub branch and PR. This is th
 - The internal review states are `NOT YET ASSESSED`, `DOCUMENTATION REQUESTED`, `UNDER TECHNICAL REVIEW`, `EVIDENCE REVIEWED FOR SPECIFIED APPLICATION`, `FURTHER VERIFICATION REQUIRED`, `DO NOT OFFER`.
 - Public evidence statements require a documented reviewer date, issuer and application-specific review status. A reviewer must still verify the substance: schema validation cannot determine legal or technical compliance.
 - Technical download links render only with `documentAccess: approved-public`; individual test reports also require `publicPermission: true`. Never commit confidential reports even on a draft profile.
-- Add approved product imagery under `public/images` and set the profile’s optional `image: {src, alt, licence}` object; record the licence and descriptive alternative text. Current conceptual material studies are not product evidence.
-- Edit homepage, founder and future collection content in `app/page.tsx` and `app/[page]/page.tsx`. Category/profile templates are under `app/materials/[[...segments]]`. Future verified case studies and articles should use new validated collections and routes; none are invented here.
+- Add approved product imagery under `public/images` and set the profile’s optional `image: {src, alt, licence}` object; record the licence and descriptive alternative text. Each category has its own unlabelled application image. These generated application studies are not evidence of completed GLANHEIM projects or verified product performance.
+- Edit homepage content in `app/page.tsx`, company operations and the generic founding story in `components/business-sections.tsx`, and supporting pages in `app/[page]/page.tsx`. Category/profile templates are under `app/materials/[[...segments]]`. Future verified case studies and articles should use new validated collections and routes; none are invented here.
 
 Run `npm run content:check` and the full validation commands after edits. Netlify rebuilds public pages after an approved merge.
 
@@ -141,3 +141,15 @@ Keep Node on a supported release and review dependency/security updates monthly.
 ## 13. Launch status
 
 See `LAUNCH-CHECKLIST.md`. An implemented integration and passing tests with test doubles do not establish live Resend delivery, a real Dropbox upload, business approval, technical certification or legal readiness.
+
+## Taste design trial
+
+Installed via the requested `npx skills add Leonxlnx/taste-skill` command (noninteractive Codex project installation). The skill lives at `.agents/skills/design-taste-frontend/SKILL.md` and its version is recorded in `skills-lock.json`. Vendored skill scripts are excluded from application ESLint; they are development tooling, not website runtime code.
+
+The direction is “Photographs at uneven sizes”, seed 2075853245, keeping the green brand and type. White is the user-requested ground. No external photograph or video licence is asserted: new material and architectural images are generated concept illustrations and are recorded as concept assets in this README and the content records. They are not completed projects or verified supplier photographs. No unrelated footage was added.
+
+Interactive features include a package builder that carries selected categories into the real enquiry, service-role selection on Home and About Us, expandable supply stages and questions, catalogue search/filters, and page contents links. Existing enquiry validation and fail-closed integration behaviour are retained. Main navigation and collection controls use larger readable labels and touch targets, with a mobile menu on smaller screens.
+
+Run `node .agents/skills/design-taste-frontend/scripts/lint.mjs app components lib` for the source design check. The full inspector requires an installed Chromium that can launch in the environment. Local inspection outputs belong in ignored `.taste-skill/`.
+
+The material palette now maps a distinct image to each of its 18 categories. Examples include an office suspended ceiling grid, a reception desk, glass partitions, tile flooring, bathroom finishes, standing-seam roofing and exposed steel. No image captions or project labels are rendered, as requested by the owner. Their provenance remains in the image fields of `content/catalogue.json`. No third-party designer’s images were copied. The skill’s open-collection searches could not connect, including a retry through the configured proxy; tailored generated assets were used instead.

@@ -27,7 +27,7 @@
 ## Business owner approval
 
 - [ ] Confirm legal entity and applicable business disclosures.
-- [ ] Approve Liam Glanville's biography and the use of the supplied logo and tagline.
+- [ ] Approve the generic company founding story, the trial slogan-free logo and the use of supplied brand artwork.
 - [ ] Approve supply-only scope, actual sourcing capability and current category coverage.
 - [ ] Confirm no 24/7, stock, delivery time, supplier agreement or completed-project claims are implied.
 - [ ] Approve enquiry handling staff, private-store access, overseas providers and notification recipients.

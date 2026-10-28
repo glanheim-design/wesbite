@@ -15,12 +15,17 @@
       "materialType": "Metal",
       "finish": "Metallic",
       "application": "External envelope",
-      "technical": "System review"
+      "technical": "System review",
+      "image": {
+        "src": "/images/facade.webp",
+        "alt": "Stone, brick and architectural aluminium facade",
+        "licence": "Generated material application concept; not a third-party project photograph."
+      }
     },
     {
       "group": "exterior",
       "slug": "brick-masonry",
-      "name": "Brick & masonry finishes",
+      "name": "Brick & masonry",
       "description": "Texture, rhythm and enduring architectural character.",
       "items": [
         "Brick slip systems",
@@ -31,7 +36,12 @@
       "materialType": "Masonry",
       "finish": "Textured",
       "application": "External envelope",
-      "technical": "System review"
+      "technical": "System review",
+      "image": {
+        "src": "/images/materials/brick-masonry.webp",
+        "alt": "Brick masonry finishes at a contemporary building entrance",
+        "licence": "Generated material application concept; not a third-party project photograph."
+      }
     },
     {
       "group": "exterior",
@@ -47,7 +57,12 @@
       "materialType": "Stone & porcelain",
       "finish": "Natural",
       "application": "External envelope",
-      "technical": "System review"
+      "technical": "System review",
+      "image": {
+        "src": "/images/materials/stone-porcelain.webp",
+        "alt": "Large-format stone and porcelain facade panels",
+        "licence": "Generated material application concept; not a third-party project photograph."
+      }
     },
     {
       "group": "exterior",
@@ -64,12 +79,17 @@
       "materialType": "Metal",
       "finish": "Metallic",
       "application": "Architectural details",
-      "technical": "Engineering review"
+      "technical": "Engineering review",
+      "image": {
+        "src": "/images/materials/exterior-metalwork.webp",
+        "alt": "Architectural metal screens and external aluminium louvres",
+        "licence": "Generated material application concept; not a third-party project photograph."
+      }
     },
     {
       "group": "exterior",
       "slug": "roofing-finishes",
-      "name": "Roofing & external finishes",
+      "name": "Roofing & finishes",
       "description": "Resolve the envelope down to its finishing details.",
       "items": [
         "Selected architectural roofing",
@@ -81,7 +101,12 @@
       "materialType": "Mixed materials",
       "finish": "Project specified",
       "application": "External envelope",
-      "technical": "Weatherproofing review"
+      "technical": "Weatherproofing review",
+      "image": {
+        "src": "/images/materials/roofing-finishes.webp",
+        "alt": "Standing-seam metal roofing and detailed external flashings",
+        "licence": "Generated material application concept; not a third-party project photograph."
+      }
     },
     {
       "group": "interior",
@@ -105,7 +130,12 @@
       "materialType": "Timber & board",
       "finish": "Veneer",
       "application": "Commercial interiors",
-      "technical": "Project review"
+      "technical": "Project review",
+      "image": {
+        "src": "/images/interior.webp",
+        "alt": "Designed reception desk with timber joinery and a stone counter",
+        "licence": "Generated material application concept; not a third-party project photograph."
+      }
     },
     {
       "group": "interior",
@@ -127,7 +157,12 @@
       "materialType": "Mixed materials",
       "finish": "Textured",
       "application": "Commercial interiors",
-      "technical": "Acoustic review"
+      "technical": "Acoustic review",
+      "image": {
+        "src": "/images/materials/wall-ceiling.webp",
+        "alt": "Suspended office ceiling grid with acoustic tiles and integrated lighting",
+        "licence": "Generated material application concept; not a third-party project photograph."
+      }
     },
     {
       "group": "interior",
@@ -147,12 +182,17 @@
       "materialType": "Stone & porcelain",
       "finish": "Natural",
       "application": "Interior floors",
-      "technical": "Slip review"
+      "technical": "Slip review",
+      "image": {
+        "src": "/images/materials/flooring-tiling.webp",
+        "alt": "Large-format porcelain floor tiles in a commercial lobby",
+        "licence": "Generated material application concept; not a third-party project photograph."
+      }
     },
     {
       "group": "interior",
       "slug": "bathroom-wet-area",
-      "name": "Bathroom & wet-area materials",
+      "name": "Bathroom & wet areas",
       "description": "A coordinated approach to wet-area finishes.",
       "items": [
         "Bathroom tiling packages",
@@ -167,12 +207,17 @@
       "materialType": "Mixed materials",
       "finish": "Project specified",
       "application": "Wet areas",
-      "technical": "Waterproofing review"
+      "technical": "Waterproofing review",
+      "image": {
+        "src": "/images/materials/bathroom-wet-area.webp",
+        "alt": "Coordinated bathroom tiling, vanity and shower glazing",
+        "licence": "Generated material application concept; not a third-party project photograph."
+      }
     },
     {
       "group": "interior",
       "slug": "doors-hardware",
-      "name": "Doors & architectural hardware",
+      "name": "Doors & hardware",
       "description": "The tactile details of everyday use.",
       "items": [
         "Internal door leaves",
@@ -188,7 +233,12 @@
       "materialType": "Mixed materials",
       "finish": "Metallic",
       "application": "Commercial interiors",
-      "technical": "System review"
+      "technical": "System review",
+      "image": {
+        "src": "/images/materials/doors-hardware.webp",
+        "alt": "Oak doors with architectural bronze handles and framing",
+        "licence": "Generated material application concept; not a third-party project photograph."
+      }
     },
     {
       "group": "interior",
@@ -206,12 +256,17 @@
       "materialType": "Glass",
       "finish": "Clear",
       "application": "Commercial interiors",
-      "technical": "Safety glazing review"
+      "technical": "Safety glazing review",
+      "image": {
+        "src": "/images/materials/glazing-partitions.webp",
+        "alt": "Glass meeting-room partitions in a designed office",
+        "licence": "Generated material application concept; not a third-party project photograph."
+      }
     },
     {
       "group": "interior",
       "slug": "architectural-metalwork",
-      "name": "Interior architectural metalwork",
+      "name": "Interior metalwork",
       "description": "A refined accent. A purposeful detail.",
       "items": [
         "Decorative metal panels",
@@ -225,7 +280,12 @@
       "materialType": "Metal",
       "finish": "Metallic",
       "application": "Architectural details",
-      "technical": "Project review"
+      "technical": "Project review",
+      "image": {
+        "src": "/images/materials/interior-metalwork.webp",
+        "alt": "Decorative bronze metal panels and architectural trims",
+        "licence": "Generated material application concept; not a third-party project photograph."
+      }
     },
     {
       "group": "interior",
@@ -245,12 +305,17 @@
       "materialType": "Stone & porcelain",
       "finish": "Natural",
       "application": "Commercial interiors",
-      "technical": "Eligibility review"
+      "technical": "Eligibility review",
+      "image": {
+        "src": "/images/materials/stone-solid-surfaces.webp",
+        "alt": "Natural stone counter with carefully detailed slab junctions",
+        "licence": "Generated material application concept; not a third-party project photograph."
+      }
     },
     {
       "group": "interior",
       "slug": "commercial-fitout",
-      "name": "Commercial fit-out packages",
+      "name": "Commercial fit-out",
       "description": "Many materials. One coordinated supply brief.",
       "items": [
         "Office interior finish packages",
@@ -265,7 +330,12 @@
       "materialType": "Mixed materials",
       "finish": "Project specified",
       "application": "Commercial interiors",
-      "technical": "Project review"
+      "technical": "Project review",
+      "image": {
+        "src": "/images/materials/commercial-fitout.webp",
+        "alt": "Coordinated commercial interior with joinery, glazing and floor finishes",
+        "licence": "Generated material application concept; not a third-party project photograph."
+      }
     },
     {
       "group": "structural",
@@ -279,23 +349,33 @@
       "materialType": "Steel",
       "finish": "Project specified",
       "application": "Structural components",
-      "technical": "Engineering review"
+      "technical": "Engineering review",
+      "image": {
+        "src": "/images/materials/steel-components.webp",
+        "alt": "Exposed structural steel columns and beams in a workspace",
+        "licence": "Generated material application concept; not a third-party project photograph."
+      }
     },
     {
       "group": "structural",
       "slug": "timber-aluminium",
-      "name": "Timber & aluminium components",
+      "name": "Timber & aluminium",
       "description": "Material sourcing to an agreed engineering brief.",
       "items": ["Selected timber components", "Selected aluminium components"],
       "materialType": "Mixed materials",
       "finish": "Project specified",
       "application": "Structural components",
-      "technical": "Engineering review"
+      "technical": "Engineering review",
+      "image": {
+        "src": "/images/materials/timber-aluminium.webp",
+        "alt": "Timber structural beams and aluminium glazing at a pavilion",
+        "licence": "Generated material application concept; not a third-party project photograph."
+      }
     },
     {
       "group": "bespoke",
       "slug": "custom-components",
-      "name": "Custom architectural components",
+      "name": "Custom components",
       "description": "Develop the details around your design intent.",
       "items": [
         "Custom profiles",
@@ -305,7 +385,12 @@
       "materialType": "Mixed materials",
       "finish": "Project specified",
       "application": "Architectural details",
-      "technical": "Project review"
+      "technical": "Project review",
+      "image": {
+        "src": "/images/materials/custom-components.webp",
+        "alt": "Bespoke curved joinery profiles and architectural metal trims",
+        "licence": "Generated material application concept; not a third-party project photograph."
+      }
     },
     {
       "group": "bespoke",
@@ -320,7 +405,12 @@
       "materialType": "Mixed materials",
       "finish": "Project specified",
       "application": "Architectural details",
-      "technical": "Project review"
+      "technical": "Project review",
+      "image": {
+        "src": "/images/workshop.webp",
+        "alt": "Coordinated timber and natural stone material samples",
+        "licence": "Generated material application concept; not a third-party project photograph."
+      }
     }
   ],
   "products": [

@@ -1,3 +1,8 @@
+import {
+  AboutBusiness,
+  Questions,
+  SupplyProcess,
+} from "@/components/business-sections";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import {
@@ -7,53 +12,42 @@ import {
   PageIntro,
   UploadButton,
 } from "@/components/ui";
-import { processSteps } from "@/lib/content";
 import { pageMeta } from "@/lib/site";
-const pages: Record<
-  string,
-  { title: string; description: string; eyebrow: string }
-> = {
+const pages: Record<string, { title: string; description: string }> = {
   "project-packages": {
-    title: "Send us the drawings. We’ll review the package.",
+    title: "Project packages",
     description:
       "From individual architectural finishes to complete interior and exterior material packages, GLANHEIM welcomes project-specific enquiries supported by drawings, specifications and material schedules.",
-    eyebrow: "PROJECT PACKAGES",
   },
   procurement: {
-    title: "From drawings to delivery.",
+    title: "From drawings to delivery",
     description:
       "A construction-led approach to project-specific material sourcing, technical coordination, manufacturing and logistics.",
-    eyebrow: "THE PROCUREMENT APPROACH",
   },
   about: {
-    title: "Considered materials. Personal commitment.",
+    title: "About GLANHEIM",
     description:
-      "An emerging Australian construction materials sourcing business shaped by practical construction industry experience.",
-    eyebrow: "ABOUT GLANHEIM",
+      "An Australian architectural materials business, coordinating project-specific sourcing and supply from your first drawing to agreed delivery.",
   },
   contact: {
-    title: "Let’s talk materials.",
+    title: "Contact GLANHEIM",
     description:
       "A conversation is the beginning of a considered material package.",
-    eyebrow: "CONTACT GLANHEIM",
   },
   privacy: {
     title: "Privacy policy.",
     description:
       "How project enquiry information is intended to be handled. Draft for business owner and Australian legal review before launch.",
-    eyebrow: "INFORMATION & DOCUMENT HANDLING",
   },
   terms: {
     title: "Website terms.",
     description:
       "Terms for browsing GLANHEIM’s website. Draft for business owner and legal review before launch.",
-    eyebrow: "WEBSITE INFORMATION",
   },
   "enquiry-terms": {
     title: "Enquiry terms.",
     description:
       "The basis on which project scopes are submitted for review. Draft for business owner and legal review before launch.",
-    eyebrow: "PROJECT ENQUIRIES",
   },
 };
 export const dynamicParams = false;
@@ -91,7 +85,7 @@ export default async function InfoPage({
   if (!p) notFound();
   return (
     <>
-      <PageIntro eyebrow={p.eyebrow} title={p.title}>
+      <PageIntro title={p.title}>
         <p>{p.description}</p>
       </PageIntro>
       {page === "project-packages" && (
@@ -120,14 +114,12 @@ export default async function InfoPage({
             </div>
           </section>
           <section className="container prose-section">
-            <p className="eyebrow">POTENTIAL SUPPLY PACKAGES</p>
             <div className="package-options">
-              {packages.map((x, i) => (
+              {packages.map((x) => (
                 <Link
                   key={x}
                   href={`/request-pricing?package=${encodeURIComponent(x + " package")}`}
                 >
-                  <span>0{i + 1}</span>
                   <h3>{x} package</h3>
                   <span aria-hidden="true">↗</span>
                 </Link>
@@ -194,86 +186,59 @@ export default async function InfoPage({
           </section>
         </>
       )}
+      {page === "project-packages" && (
+        <section className="container package-study">
+          <h2>Materials in context</h2>
+          <div>
+            <Link href="/materials/interior">
+              <Architecture
+                src="/images/interior.webp"
+                alt="Reception joinery and stone surfaces"
+              />
+            </Link>
+            <Link href="/materials/exterior">
+              <Architecture
+                src="/images/facade.webp"
+                alt="Stone, brick and aluminium exterior finishes"
+              />
+            </Link>
+          </div>
+        </section>
+      )}
       {page === "procurement" && (
         <>
           <div className="container">
-            <Architecture className="wide-image" />
+            <Architecture
+              className="wide-image"
+              src="/images/facade.webp"
+              alt="Conceptual stone and metal facade detailing"
+            />
           </div>
-          <section className="container process-section">
-            <div className="process-list">
-              {processSteps.map(([t, d], i) => (
-                <div key={t}>
-                  <span className="process-number">0{i + 1}</span>
-                  <h2>{t}</h2>
-                  <p>{d}</p>
-                </div>
-              ))}
-            </div>
-            <div className="note-box">
-              <h3>A defined supply scope</h3>
-              <p>
-                GLANHEIM’s role is to coordinate material supply in accordance
-                with the agreed contract. Installation, construction
-                contracting, regulated engineering and certification are not
-                included. Samples, shop drawings, testing and inspections are
-                coordinated only where agreed.
-              </p>
-            </div>
-            <Button href="/request-pricing">
-              Submit your drawings for pricing
-            </Button>
-          </section>
-        </>
-      )}
-      {page === "about" && (
-        <>
+          <SupplyProcess />
           <section className="container detail-grid">
-            <Architecture />
             <div>
-              <p className="eyebrow">CURATORS OF DISTINCTION.</p>
-              <h2>
-                Built on trust.
-                <br />
-                <em>Led by experience.</em>
-              </h2>
+              <h2>An agreed supply scope</h2>
               <p>
-                GLANHEIM is founded by Liam Glanville. His background includes
-                service in the British Army’s Household Cavalry and construction
-                management experience in New Zealand and the Caribbean.
+                GLANHEIM coordinates material supply in accordance with the
+                agreed contract. Samples, manufacturer shop drawings,
+                inspections and delivery requirements are included only where
+                expressly agreed.
               </p>
               <p>
-                That construction experience shapes a practical understanding of
-                procurement pressures, material lead times, project
-                documentation, subcontractor coordination and the importance of
-                client care.
+                The current offering is supply only. Installation, construction
+                contracting, engineering and certification remain outside that
+                scope.
               </p>
-              <p>
-                Today, the materials supply focus brings that perspective to
-                Australian builders, developers and commercial project teams.
-              </p>
-              <p className="founder-signature">Liam Glanville</p>
-              <p className="eyebrow">FOUNDER / GLANHEIM</p>
+              <Button href="/request-pricing">Request pricing</Button>
             </div>
-          </section>
-          <section className="container prose-section">
-            <h2>
-              “Trust, discretion,
-              <br />
-              <em>and client-first service.”</em>
-            </h2>
-            <p>
-              Principles drawn from GLANHEIM’s founding brand statement. Applied
-              here to considered sourcing, technical coordination and clearly
-              defined material supply.
-            </p>
-            <p>
-              GLANHEIM’s current website offering is supply only. Each scope is
-              reviewed individually, with suitability, documentation and
-              commercial terms established before commitments are made.
-            </p>
+            <Architecture
+              src="/images/interior.webp"
+              alt="Conceptual interior with coordinated timber and stone finishes"
+            />
           </section>
         </>
       )}
+      {page === "about" && <AboutBusiness />}
       {page === "contact" && (
         <section className="container contact-section">
           <a className="contact-email" href="mailto:info@glanheim.com">
@@ -281,52 +246,67 @@ export default async function InfoPage({
           </a>
           <div className="three-col contact-paths">
             <article>
-              <p className="eyebrow">01 / PROJECT PRICING</p>
-              <h2>
-                Bring us
-                <br />
-                your brief.
-              </h2>
-              <p>
-                For contractors, estimators and quantity surveyors with a
-                material package to price.
-              </p>
-              <Button href="/request-pricing">Request pricing</Button>
+              <Architecture
+                src="/images/interior.webp"
+                alt="Reception joinery and coordinated interior materials"
+              />
+              <div>
+                <h2>
+                  Bring us
+                  <br />
+                  your brief.
+                </h2>
+                <p>
+                  For contractors, estimators and quantity surveyors with a
+                  material package to price.
+                </p>
+                <Button href="/request-pricing">Request pricing</Button>
+              </div>
             </article>
             <article>
-              <p className="eyebrow">02 / GENERAL ENQUIRIES</p>
-              <h2>
-                Start a<br />
-                conversation.
-              </h2>
-              <p>
-                For business enquiries and questions about our material sourcing
-                approach.
-              </p>
-              <a
-                className="text-link"
-                href="mailto:info@glanheim.com?subject=General%20enquiry"
-              >
-                Email our team ↗
-              </a>
+              <Architecture
+                src="/images/facade.webp"
+                alt="Stone, brick and aluminium exterior material finishes"
+              />
+              <div>
+                <h2>
+                  Start a<br />
+                  conversation.
+                </h2>
+                <p>
+                  For business enquiries and questions about our material
+                  sourcing approach.
+                </p>
+                <a
+                  className="text-link"
+                  href="mailto:info@glanheim.com?subject=General%20enquiry"
+                >
+                  Email our team ↗
+                </a>
+              </div>
             </article>
             <article>
-              <p className="eyebrow">03 / MANUFACTURER ENQUIRIES</p>
-              <h2>
-                A shared
-                <br />
-                standard.
-              </h2>
-              <p>
-                For prospective manufacturing partners. Introduce your
-                capabilities and technical documentation.
-              </p>
-              <a
-                className="text-link"
-                href="mailto:info@glanheim.com?subject=Manufacturer%20enquiry"
-              >
-                Introduce your business ↗
-              </a>
+              <Architecture
+                src="/images/workshop.webp"
+                alt="Timber and stone samples with a material review brief"
+              />
+              <div>
+                <h2>
+                  A shared
+                  <br />
+                  standard.
+                </h2>
+                <p>
+                  For prospective manufacturing partners. Introduce your
+                  capabilities and technical documentation.
+                </p>
+                <a
+                  className="text-link"
+                  href="mailto:info@glanheim.com?subject=Manufacturer%20enquiry"
+                >
+                  Introduce your business ↗
+                </a>
+              </div>
             </article>
           </div>
         </section>
@@ -470,9 +450,12 @@ export default async function InfoPage({
           )}
         </section>
       )}
-      {!["privacy", "terms", "enquiry-terms", "contact"].includes(page) && (
-        <ClosingCTA />
+      {["project-packages", "procurement", "contact"].includes(page) && (
+        <Questions />
       )}
+      {!["privacy", "terms", "enquiry-terms", "contact", "about"].includes(
+        page,
+      ) && <ClosingCTA />}
     </>
   );
 }

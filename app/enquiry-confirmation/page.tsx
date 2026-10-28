@@ -13,12 +13,7 @@ export default async function Confirmation() {
   );
   return (
     <section className="container confirmation">
-      <p className="eyebrow">GLANHEIM / PROJECT ENQUIRIES</p>
-      <h1>
-        {reference
-          ? "Your next chapter starts here."
-          : "Let’s confirm your enquiry."}
-      </h1>
+      <h1>{reference ? "Enquiry received" : "Check your enquiry"}</h1>
       {reference ? (
         <>
           <p>

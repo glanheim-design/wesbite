@@ -7,7 +7,7 @@ const links = [
   ["Materials", "/materials"],
   ["Project packages", "/project-packages"],
   ["Procurement", "/procurement"],
-  ["About", "/about"],
+  ["About us", "/about"],
   ["Contact", "/contact"],
 ];
 export default function Header() {
@@ -34,10 +34,10 @@ export default function Header() {
         className="brand"
       >
         <Image
-          src="/brand/logo-ivory.svg"
+          src="/brand/logo-white.svg"
           width={280}
           height={57}
-          alt="GLANHEIM — Curators of Distinction"
+          alt="GLANHEIM"
           priority
         />
       </Link>

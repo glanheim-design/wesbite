@@ -5,6 +5,8 @@ export default defineConfig([
   ...nextVitals,
   ...nextTs,
   globalIgnores([
+    ".agents/**",
+    ".taste-skill/**",
     ".next/**",
     "node_modules/**",
     "next-env.d.ts",

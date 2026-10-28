@@ -1,5 +1,7 @@
 "use client";
 import Link from "next/link";
+import Image from "next/image";
+import { getCategoryArtwork } from "@/lib/artwork";
 import { useMemo, useState } from "react";
 import type { Group } from "@/lib/content";
 type Category = (typeof import("@/lib/content").categories)[number];
@@ -90,17 +92,20 @@ export default function Catalogue({
         </button>
       </div>
       <div className="catalogue-grid">
-        {filtered.map((c, i) => (
+        {filtered.map((c) => (
           <Link
             className="catalogue-card"
             key={c.group + c.slug}
             href={categoryHref(c)}
           >
-            <div className={`catalogue-surface surface-${i % 6}`}>
-              <span>{c.materialType}</span>
-              <span className="surface-letter">{c.name.charAt(0)}</span>
+            <div className="catalogue-surface">
+              <Image
+                src={getCategoryArtwork(c).src}
+                alt={getCategoryArtwork(c).alt}
+                fill
+                sizes="(max-width:700px) 100vw, 40vw"
+              />
             </div>
-            <p className="eyebrow">{c.group} / SUPPLY ENQUIRIES</p>
             <h2>
               {c.name}
               <Arrow />

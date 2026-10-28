@@ -2,7 +2,6 @@
 export default function ErrorPage({ reset }: { reset: () => void }) {
   return (
     <section className="container confirmation">
-      <p className="eyebrow">GLANHEIM</p>
       <h1>A moment, please.</h1>
       <p>
         This page could not be loaded. Please try again or email{" "}

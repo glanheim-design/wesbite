@@ -1,3 +1,5 @@
+import { existsSync } from "node:fs";
+import path from "node:path";
 import { catalogueSchema } from "../lib/content";
 import raw from "../content/catalogue.json";
 const result = catalogueSchema.safeParse(raw);
@@ -22,3 +24,13 @@ for (const p of result.data.products) {
 console.log(
   `Validated ${ids.size} categories and ${productIds.size} sourcing profiles. No prohibited or do-not-offer profiles are public.`,
 );
+
+for (const category of result.data.categories) {
+  if (
+    category.image &&
+    !existsSync(path.join(process.cwd(), "public", category.image.src))
+  ) {
+    throw new Error(`Missing category image: ${category.image.src}`);
+  }
+}
+console.log("All category image files are present.");

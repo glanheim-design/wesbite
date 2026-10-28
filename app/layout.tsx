@@ -2,6 +2,8 @@ import type { Metadata, Viewport } from "next";
 import Link from "next/link";
 import Image from "next/image";
 import Header from "@/components/header";
+import PageExperience from "@/components/page-experience";
+import { Architecture } from "@/components/ui";
 import { siteUrl } from "@/lib/site";
 import "./globals.css";
 export const metadata: Metadata = {
@@ -36,13 +38,20 @@ export default function RootLayout({
         </a>
         <Header />
         <main id="main">{children}</main>
+        <PageExperience />
         <footer className="site-footer">
-          <div className="container">
+          <div className="footer-photo">
+            <Architecture
+              src="/images/architecture.webp"
+              alt="Architectural concept of a limestone courtyard and timber screening"
+            />
+          </div>
+          <div className="container footer-content">
             <div className="footer-top">
               <Link href="/" aria-label="GLANHEIM home">
                 <Image
-                  src="/brand/logo-green.svg"
-                  alt="GLANHEIM — Curators of Distinction"
+                  src="/brand/logo-white.svg"
+                  alt="GLANHEIM"
                   width={360}
                   height={75}
                 />
@@ -58,6 +67,13 @@ export default function RootLayout({
                 info@glanheim.com ↗
               </a>
             </div>
+            <nav className="footer-menu" aria-label="Footer">
+              <Link href="/materials">Materials</Link>
+              <Link href="/project-packages">Project packages</Link>
+              <Link href="/procurement">Procurement</Link>
+              <Link href="/about">About us</Link>
+              <Link href="/contact">Contact</Link>
+            </nav>
             <div className="footer-links">
               <span>© {new Date().getFullYear()} GLANHEIM</span>
               <Link href="/privacy">Privacy policy</Link>
@@ -76,7 +92,7 @@ export default function RootLayout({
               name: "GLANHEIM",
               url: siteUrl,
               email: "info@glanheim.com",
-              logo: siteUrl + "/brand/logo-ivory.svg",
+              logo: siteUrl + "/brand/logo-white.svg",
               areaServed: "AU",
               description:
                 "Architectural materials sourcing and supply for Australian construction projects.",

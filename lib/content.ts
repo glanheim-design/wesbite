@@ -7,33 +7,26 @@ export const groups = [
   "bespoke",
 ] as const;
 export type Group = (typeof groups)[number];
-export const groupInfo: Record<
-  Group,
-  { title: string; intro: string; number: string }
-> = {
+export const groupInfo: Record<Group, { title: string; intro: string }> = {
   exterior: {
     title: "Exterior systems",
     intro:
       "The first impression. The lasting protection. Explore façade materials, architectural metalwork and exterior finishes for your project.",
-    number: "01",
   },
   interior: {
     title: "Interior packages",
     intro:
       "Considered from the inside out. Coordinate joinery, surfaces and architectural finishes as one project-specific material package.",
-    number: "02",
   },
   structural: {
     title: "Structural materials",
     intro:
       "Project-led sourcing enquiries for selected structural components, subject to engineering, evidence and suitability review.",
-    number: "03",
   },
   bespoke: {
     title: "Bespoke materials",
     intro:
       "For the details that make a project its own. Explore custom finishes and components developed around your documentation.",
-    number: "04",
   },
 };
 export const evidenceStatuses = [
@@ -140,6 +133,15 @@ export const catalogueSchema = z.object({
       finish: z.string(),
       application: z.string(),
       technical: z.string(),
+      image: z
+        .object({
+          src: z
+            .string()
+            .regex(/^\/images\/[a-zA-Z0-9/_-]+\.(png|jpg|jpeg|webp|svg)$/),
+          alt: z.string().min(5),
+          licence: z.string().min(1),
+        })
+        .optional(),
     }),
   ),
   products: z.array(productSchema),

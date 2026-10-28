@@ -151,9 +151,9 @@ test("Dropbox fallback and unverified confirmation are honest", async ({
   const r = await page.goto("/unknown-page");
   expect(r?.status()).toBe(404);
 });
-test("navigation is usable at each viewport", async ({ page }, testInfo) => {
+test("navigation is usable at each viewport", async ({ page }) => {
   await page.goto("/");
-  if (testInfo.project.name === "mobile") {
+  if (await page.getByRole("button", { name: "Menu +" }).isVisible()) {
     await page.getByRole("button", { name: "Menu +" }).click();
     await page
       .getByRole("navigation", { name: "Primary" })
@@ -175,6 +175,8 @@ test("main pages have no automated WCAG A/AA violations", async ({ page }) => {
     "/",
     "/materials",
     "/project-packages",
+    "/about",
+    "/procurement",
     "/contact",
     "/request-pricing",
   ]) {
@@ -269,7 +271,7 @@ test("valid signed receipt renders confirmation (local test key, no email delive
     ]);
     await page.goto(base + "/enquiry-confirmation");
     await expect(
-      page.getByRole("heading", { name: "Your next chapter starts here." }),
+      page.getByRole("heading", { name: "Enquiry received" }),
     ).toBeVisible();
     await expect(page.locator(".reference")).toHaveText("GL-2026-ABCDEF12");
   } finally {
@@ -299,4 +301,180 @@ test("public positioning presents an Australian materials business", async ({
   }
   const response = await page.goto("/compliance");
   expect(response?.status()).toBe(404);
+});
+
+test("About us is a real business page with working audience controls and no personal biography", async ({
+  page,
+}) => {
+  await page.goto("/");
+  if (await page.getByRole("button", { name: "Menu +" }).isVisible())
+    await page.getByRole("button", { name: "Menu +" }).click();
+  await page
+    .getByRole("navigation", { name: "Primary" })
+    .getByRole("link", { name: "About us", exact: true })
+    .click();
+  await expect(page).toHaveURL(/\/about$/);
+  await expect(page.getByRole("heading", { level: 1 })).toHaveText(
+    "About GLANHEIM",
+  );
+  await expect(page.locator("main")).not.toContainText(
+    /Liam|Glanville|visa|Caribbean|Household Cavalry/i,
+  );
+  await expect(page.locator("main")).toContainText(
+    "Australia, New Zealand and the UK",
+  );
+  await expect(
+    page.getByRole("heading", { name: "What shaped GLANHEIM", exact: true }),
+  ).toBeVisible();
+  await page.getByRole("button", { name: "QS & estimators" }).click();
+  await expect(page.locator(".audience-answer")).toContainText(
+    "BOQ, finish schedules, tender deadline",
+  );
+  await expect(
+    page.getByRole("heading", { name: "How supply works", exact: true }),
+  ).toBeVisible();
+  await expect(
+    page.getByRole("heading", { name: "What we supply", exact: true }),
+  ).toBeVisible();
+});
+
+test("package builder carries selected materials into the real enquiry", async ({
+  page,
+}) => {
+  await page.goto("/");
+  await page
+    .getByRole("checkbox", { name: "Joinery & cabinetry", exact: true })
+    .check();
+  await page
+    .getByRole("checkbox", { name: "Stone & porcelain", exact: true })
+    .check();
+  await expect(page.locator(".scope-summary")).toContainText("2 categories");
+  await page
+    .locator(".scope-builder")
+    .getByRole("link", { name: "Request pricing", exact: true })
+    .click();
+  await page.getByLabel("Full name").fill("Alex Builder");
+  await page
+    .getByLabel("Company *", { exact: true })
+    .fill("Example Construction");
+  await page.getByLabel("Work email").fill("alex@example.com");
+  await page.getByRole("button", { name: "Continue", exact: true }).click();
+  await page.getByRole("button", { name: "Continue", exact: true }).click();
+  await expect(
+    page.getByRole("checkbox", { name: "Joinery", exact: true }),
+  ).toBeChecked();
+  await expect(
+    page.getByRole("checkbox", { name: "Stone / porcelain", exact: true }),
+  ).toBeChecked();
+});
+
+test("trial logo has a white ground and no slogan, process disclosures work", async ({
+  page,
+}) => {
+  await page.goto("/procurement");
+  await expect(page.locator(".brand img")).toHaveAttribute(
+    "src",
+    "/brand/logo-white.svg",
+  );
+  const svg = await (await page.request.get("/brand/logo-white.svg")).text();
+  expect(svg).not.toContain("font_11_");
+  await expect(
+    page.locator(".process-disclosures details").first(),
+  ).toHaveAttribute("open", "");
+  await page
+    .locator(".process-disclosures")
+    .getByText("Delivery coordination", { exact: true })
+    .click();
+  await expect(
+    page.locator(".process-disclosures details").last(),
+  ).toHaveAttribute("open", "");
+  await page.locator(".page-tools summary").click();
+  await expect(
+    page.getByRole("navigation", { name: "Page contents" }),
+  ).toBeVisible();
+});
+
+test("primary navigation stays visible and thumb-friendly at phone, tablet and desktop widths", async ({
+  page,
+}) => {
+  for (const width of [320, 390, 768, 1440]) {
+    await page.setViewportSize({ width, height: 900 });
+    await page.goto("/");
+    expect(
+      await page.evaluate(
+        () => document.documentElement.scrollWidth <= innerWidth + 1,
+      ),
+    ).toBe(true);
+    const menu = page.getByRole("button", { name: "Menu +" });
+    if (await menu.isVisible()) await menu.click();
+    const nav = page.getByRole("navigation", { name: "Primary" });
+    for (const name of [
+      "Materials",
+      "Project packages",
+      "Procurement",
+      "About us",
+      "Contact",
+    ]) {
+      const link = nav.getByRole("link", { name, exact: true });
+      await expect(link).toBeVisible();
+      const bounds = await link.boundingBox();
+      expect(bounds!.height).toBeGreaterThanOrEqual(44);
+    }
+    await nav.getByRole("link", { name: "Materials", exact: true }).click();
+    await expect(page).toHaveURL(/\/materials$/);
+  }
+});
+
+test("architectural concepts can be selected and slideshow paused", async ({
+  page,
+}) => {
+  await page.goto("/");
+  await page.getByRole("button", { name: "Interiors", exact: true }).click();
+  await expect(
+    page.getByRole("button", { name: "Interiors", exact: true }),
+  ).toHaveAttribute("aria-pressed", "true");
+  await expect(
+    page.getByRole("button", { name: "Play image slideshow" }),
+  ).toBeVisible();
+  await page.getByRole("button", { name: "Play image slideshow" }).click();
+  await expect(
+    page.getByRole("button", { name: "Pause image slideshow" }),
+  ).toBeVisible();
+});
+
+test("every material category has its own relevant image without gallery captions", async ({
+  page,
+  request,
+}) => {
+  await page.goto("/materials");
+  await expect(page.locator(".catalogue-card")).toHaveCount(categories.length);
+  const paths = categories.map((c) => c.image?.src);
+  expect(new Set(paths).size).toBe(categories.length);
+  for (const path of paths) {
+    expect(path).toBeTruthy();
+    expect((await request.get(path!)).status()).toBe(200);
+  }
+  const ceiling = page.locator(".catalogue-card").filter({
+    has: page.getByRole("heading", {
+      name: "Wall & ceiling systems",
+      exact: true,
+    }),
+  });
+  await expect(ceiling.locator("img")).toHaveAttribute(
+    "alt",
+    /office ceiling grid/i,
+  );
+  const joinery = page.locator(".catalogue-card").filter({
+    has: page.getByRole("heading", {
+      name: "Joinery & cabinetry",
+      exact: true,
+    }),
+  });
+  await expect(joinery.locator("img")).toHaveAttribute(
+    "alt",
+    /reception desk/i,
+  );
+  await expect(
+    page.locator(".catalogue-card figcaption,.catalogue-card .image-caption"),
+  ).toHaveCount(0);
 });

@@ -1,3 +1,5 @@
+import { getCategoryArtwork } from "@/lib/artwork";
+import { Questions } from "@/components/business-sections";
 import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
@@ -79,10 +81,7 @@ export default async function Materials({ params }: Props) {
             ]}
           />
         </div>
-        <PageIntro
-          eyebrow="PROJECT-SPECIFIC SOURCING PROFILE"
-          title={product.name}
-        >
+        <PageIntro title={cat!.name}>
           <p>{product.description}</p>
         </PageIntro>
         <section className="container detail-grid">
@@ -96,23 +95,13 @@ export default async function Materials({ params }: Props) {
               />
             </div>
           ) : (
-            <div className="material-profile-art">
-              <span>{cat!.materialType}</span>
-              <span className="large-serif">{cat!.name}</span>
-              <small>
-                Illustrative material study · not a verified product photograph
-              </small>
-            </div>
+            <Architecture {...getCategoryArtwork(cat!)} />
           )}
           <div>
             <p className="status-tag">
               Sourcing enquiry · availability to be established
             </p>
-            <h2>
-              Your specification.
-              <br />
-              <em>A considered response.</em>
-            </h2>
+            <h2>Review your specification</h2>
             <p>
               Send your intended application, quantities, finish schedule and
               project requirements for scope review.
@@ -179,6 +168,18 @@ export default async function Materials({ params }: Props) {
             Our procurement approach ↗
           </Link>
         </section>
+        <Questions
+          questions={[
+            [
+              "How do I request material pricing?",
+              "Choose the relevant category or sourcing profile, then send your scope, quantities and project requirements using the pricing enquiry form.",
+            ],
+            [
+              "Are these stock products?",
+              "These are sourcing categories and enquiry profiles. Availability, technical specifications and lead times are established for the selected material and project.",
+            ],
+          ]}
+        />
         <ClosingCTA />
       </>
     );
@@ -194,17 +195,13 @@ export default async function Materials({ params }: Props) {
             ]}
           />
         </div>
-        <PageIntro eyebrow={`${group} / MATERIAL CATEGORY`} title={cat.name}>
+        <PageIntro title={cat.name}>
           <p>{cat.description}</p>
         </PageIntro>
         <section className="container detail-grid">
-          <Architecture />
+          <Architecture {...getCategoryArtwork(cat)} />
           <div>
-            <h2>
-              A package shaped
-              <br />
-              <em>around your project.</em>
-            </h2>
+            <h2>Your project package</h2>
             <p>
               Potential sourcing categories for discussion, subject to
               availability, product suitability and evidence review. These are
@@ -223,7 +220,6 @@ export default async function Materials({ params }: Props) {
           </div>
         </section>
         <section className="container prose-section">
-          <p className="eyebrow">EXPLORE THE REQUIREMENTS</p>
           <h2>Start with a sourcing profile.</h2>
           <p>
             Manufacturer, dimensions, finishes, technical documentation and
@@ -237,19 +233,24 @@ export default async function Materials({ params }: Props) {
               </Link>
             ))}
         </section>
+        <Questions
+          questions={[
+            [
+              "How do I request material pricing?",
+              "Choose the relevant category or sourcing profile, then send your scope, quantities and project requirements using the pricing enquiry form.",
+            ],
+            [
+              "Are these stock products?",
+              "These are sourcing categories and enquiry profiles. Availability, technical specifications and lead times are established for the selected material and project.",
+            ],
+          ]}
+        />
         <ClosingCTA />
       </>
     );
   return (
     <>
-      <PageIntro
-        eyebrow={
-          group
-            ? `${groupInfo[group].number} / THE MATERIAL PALETTE`
-            : "ARCHITECTURAL MATERIALS / AUSTRALIA"
-        }
-        title={group ? groupInfo[group].title : "A material difference."}
-      >
+      <PageIntro title={group ? groupInfo[group].title : "Material palette"}>
         <p>
           {group
             ? groupInfo[group].intro
@@ -277,6 +278,18 @@ export default async function Materials({ params }: Props) {
         </p>
         <Catalogue group={group} categories={categories} />
       </section>
+      <Questions
+        questions={[
+          [
+            "How do I request material pricing?",
+            "Choose the relevant category or sourcing profile, then send your scope, quantities and project requirements using the pricing enquiry form.",
+          ],
+          [
+            "Are these stock products?",
+            "These are sourcing categories and enquiry profiles. Availability, technical specifications and lead times are established for the selected material and project.",
+          ],
+        ]}
+      />
       <ClosingCTA />
     </>
   );

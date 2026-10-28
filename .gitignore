@@ -6,3 +6,6 @@ playwright-report/
 test-results/
 *.tsbuildinfo
 .netlify/
+
+# Local design inspection output; the installed Taste skill and its lockfile are retained.
+.taste-skill/
