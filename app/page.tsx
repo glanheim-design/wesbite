@@ -51,7 +51,7 @@ export default function Home() {
           final fit-out.
         </p>
         <div className="pl-hero-actions">
-          <Link className="pl-button" href="/products">
+          <Link className="pl-button" href="/collections">
             Explore the collection <span aria-hidden="true">↓</span>
           </Link>
           <Link className="pl-text-link" href="#construction-stages">

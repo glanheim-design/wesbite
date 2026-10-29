@@ -43,7 +43,7 @@ export default function EnquiryBasket() {
           sending your brief.
         </p>
         <div className="eb-empty-actions">
-          <Link className="eb-primary" href="/products">
+          <Link className="eb-primary" href="/collections">
             Explore the collection <span aria-hidden="true">↗</span>
           </Link>
           <Link className="eb-link" href="/request-pricing">
