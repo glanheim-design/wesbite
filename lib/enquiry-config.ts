@@ -8,3 +8,13 @@ export function enquiriesConfigured(env: Record<string, string | undefined>) {
     !!env.RATE_LIMIT_SALT?.trim()
   );
 }
+
+export type EnquiryTransport = "api" | "netlify" | "email";
+export function enquiryTransport(
+  env: Record<string, string | undefined>,
+): EnquiryTransport {
+  if (enquiriesConfigured(env)) return "api";
+  if (env.NETLIFY === "true" && env.NETLIFY_FORMS_ENABLED !== "false")
+    return "netlify";
+  return "email";
+}

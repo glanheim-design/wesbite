@@ -1,10 +1,6 @@
 {
   "pending": [
     {
-      "collection": "railings-staircases",
-      "reason": "Source PDF exceeds 32 MiB transfer limit; requires compressed or split attachment."
-    },
-    {
       "collection": "entrance-interior-doors",
       "code": "AN-GD003",
       "reason": "Only source photograph is obstructed by embedded promotional arrows and inset cards; requires a clean product image."

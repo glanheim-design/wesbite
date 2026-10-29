@@ -174,3 +174,9 @@ If delivery fails after storage, keep the form unchanged and retry. The same sub
 ## Product catalogue expansion
 
 The approved GLANHEIM catalogue experience is documented in [CATALOGUE-NOTES.md](CATALOGUE-NOTES.md). The site now includes 1,045 enquiry-only product/design references across nine collections and 82 categories, individual product pages, original code search and a persistent product shortlist that prefills the enquiry form. Original supplier advertising is not rendered. The oversized railing/staircase attachment remains pending a compressed or split copy. Production builds use Next.js’s supported webpack pipeline because Turbopack’s CSS worker cannot bind its local socket in this cloud runtime.
+
+## Netlify Forms and project collections
+
+The current site adds the railing/staircase range, bringing the enquiry-only catalogue to **1,197 entries across ten product families**. Explore it through Commercial, Residential, Fit-out, Exterior, Interior and Project packages. The editable `/enquiry` basket retains quantities, measurement notes and product references before the project form.
+
+Netlify Forms provides native intake when Resend is not connected. In Netlify, enable form detection if it is off, deploy the updated site, and open **Forms → glanheim-project-enquiry → notification settings** to add **info@glanheim.com**. The native notification is separate from the optional `BUSINESS_NOTIFICATION_EMAIL` variable. Confirm a real form record and email arrival before declaring live notifications operational. A Netlify deploy-credit pause must be resolved before the new site can publish.

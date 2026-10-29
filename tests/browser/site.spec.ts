@@ -82,20 +82,20 @@ test("product selection arrives in enquiry and required validation works", async
     .getByLabel("Company", { exact: false })
     .first()
     .fill("Example Construction");
-  await page.getByLabel("Work email").fill("alex@example.com");
+  await page.getByLabel("Email address").fill("alex@example.com");
   await page.getByRole("button", { name: "Continue", exact: true }).click();
   await page.getByRole("button", { name: "Continue", exact: true }).click();
   await expect(
-    page.getByText("Selected profile:", { exact: false }),
+    page.getByText("Selected products:", { exact: false }),
   ).toContainText(products[0].name);
 });
 async function fillForm(page: import("@playwright/test").Page) {
   await page.goto("/request-pricing");
   await page.getByLabel("Full name").fill("Alex Builder");
   await page
-    .getByLabel("Company *", { exact: true })
+    .getByLabel("Company", { exact: true })
     .fill("Example Construction");
-  await page.getByLabel("Work email").fill("alex@example.com");
+  await page.getByLabel("Email address").fill("alex@example.com");
   await page.getByRole("button", { name: "Continue", exact: true }).click();
   await page.getByRole("button", { name: "Continue", exact: true }).click();
   await page.getByLabel("Joinery", { exact: true }).check();
@@ -109,7 +109,7 @@ async function fillForm(page: import("@playwright/test").Page) {
   await page.getByRole("button", { name: "Continue", exact: true }).click();
   await page.getByRole("checkbox", { name: "I have read and agree" }).check();
 }
-test("unconfigured form blocks submission and offers email fallback", async ({
+test("unconfigured form prepares a complete enquiry email and download", async ({
   page,
 }) => {
   await fillForm(page);
@@ -117,16 +117,16 @@ test("unconfigured form blocks submission and offers email fallback", async ({
     page.getByRole("heading", { name: "Review & submit" }),
   ).toBeVisible();
   await expect(
-    page.getByRole("button", { name: "Submit project for review" }),
-  ).toBeDisabled();
+    page.getByRole("button", { name: "Download & open enquiry email" }),
+  ).toBeEnabled();
   await expect(page.locator(".integration-note")).toContainText(
-    "temporarily unavailable",
+    "Send it by email",
   );
-  expect(page.url()).toContain("/request-pricing");
   await expect(
-    page.locator(".integration-note").getByRole("link"),
-  ).toHaveAttribute("href", /mailto:info@glanheim.com/);
+    page.getByRole("button", { name: "Download complete enquiry brief" }),
+  ).toBeVisible();
 });
+
 test("success UI follows accepted response only (simulated integration)", async ({
   page,
 }) => {
@@ -139,9 +139,9 @@ test("success UI follows accepted response only (simulated integration)", async 
   );
   await fillForm(page);
   test.skip(
-    await page
+    (await page
       .getByRole("button", { name: "Submit project for review" })
-      .isDisabled(),
+      .count()) === 0,
     "Live submission configuration is absent; unavailable state is tested separately.",
   );
   await page.getByRole("button", { name: "Submit project for review" }).click();
@@ -376,9 +376,9 @@ test("package builder carries selected materials into the real enquiry", async (
     .click();
   await page.getByLabel("Full name").fill("Alex Builder");
   await page
-    .getByLabel("Company *", { exact: true })
+    .getByLabel("Company", { exact: true })
     .fill("Example Construction");
-  await page.getByLabel("Work email").fill("alex@example.com");
+  await page.getByLabel("Email address").fill("alex@example.com");
   await page.getByRole("button", { name: "Continue", exact: true }).click();
   await page.getByRole("button", { name: "Continue", exact: true }).click();
   await expect(

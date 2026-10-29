@@ -39,54 +39,56 @@ export default function RootLayout({
           Skip to content
         </a>
         <ProductSelectionProvider>
-        <Header />
-        <main id="main">{children}</main>
-        <PageExperience />
-        <footer className="site-footer">
-          <div className="footer-photo">
-            <Architecture
-              src="/images/architecture.webp"
-              alt="Architectural concept of a limestone courtyard and timber screening"
-            />
-          </div>
-          <div className="container footer-content">
-            <div className="footer-top">
-              <Link href="/" aria-label="GLANHEIM home">
-                <Image
-                  src="/brand/logo-primary.svg"
-                  alt="GLANHEIM"
-                  width={360}
-                  height={75}
-                />
-              </Link>
-              <p>
-                Architectural materials.
-                <br />
-                Considered procurement.
-                <br />
-                Australian projects.
-              </p>
-              <a className="footer-email" href="mailto:info@glanheim.com">
-                info@glanheim.com ↗
-              </a>
+          <Header />
+          <main id="main">{children}</main>
+          <PageExperience />
+          <footer className="site-footer">
+            <div className="footer-photo">
+              <Architecture
+                src="/images/architecture.webp"
+                alt="Architectural concept of a limestone courtyard and timber screening"
+              />
             </div>
-            <nav className="footer-menu" aria-label="Footer">
-              <Link href="/products">Product collections</Link>
-              <Link href="/materials">Material sourcing</Link>
-              <Link href="/project-packages">Project packages</Link>
-              <Link href="/procurement">Procurement</Link>
-              <Link href="/about">About us</Link>
-              <Link href="/contact">Contact</Link>
-            </nav>
-            <div className="footer-links">
-              <span>© {new Date().getFullYear()} GLANHEIM</span>
-              <Link href="/privacy">Privacy policy</Link>
-              <Link href="/terms">Website terms</Link>
-              <Link href="/enquiry-terms">Enquiry terms</Link>
-              <span>Supply only · Australia</span>
+            <div className="container footer-content">
+              <div className="footer-top">
+                <Link href="/" aria-label="GLANHEIM home">
+                  <Image
+                    src="/brand/logo-primary.svg"
+                    alt="GLANHEIM"
+                    width={360}
+                    height={75}
+                  />
+                </Link>
+                <p>
+                  Architectural materials.
+                  <br />
+                  Considered procurement.
+                  <br />
+                  Australian projects.
+                </p>
+                <a className="footer-email" href="mailto:info@glanheim.com">
+                  info@glanheim.com ↗
+                </a>
+              </div>
+              <nav className="footer-menu" aria-label="Footer">
+                <Link href="/products">Product collections</Link>
+                <Link href="/commercial">Commercial packages</Link>
+                <Link href="/enquiry">Your enquiry</Link>
+                <Link href="/materials">Material sourcing</Link>
+                <Link href="/project-packages">Project packages</Link>
+                <Link href="/procurement">Procurement</Link>
+                <Link href="/about">About us</Link>
+                <Link href="/contact">Contact</Link>
+              </nav>
+              <div className="footer-links">
+                <span>© {new Date().getFullYear()} GLANHEIM</span>
+                <Link href="/privacy">Privacy policy</Link>
+                <Link href="/terms">Website terms</Link>
+                <Link href="/enquiry-terms">Enquiry terms</Link>
+                <span>Supply only · Australia</span>
+              </div>
             </div>
-          </div>
-        </footer>
+          </footer>
         </ProductSelectionProvider>
         <script
           type="application/ld+json"

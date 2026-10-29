@@ -1,4 +1,9 @@
-import { catalogueProducts, productCollections, productHref as catalogueProductHref } from "@/lib/products";
+import { projectCollections } from "@/lib/project-collections";
+import {
+  catalogueProducts,
+  productCollections,
+  productHref as catalogueProductHref,
+} from "@/lib/products";
 import type { MetadataRoute } from "next";
 import {
   categories,
@@ -12,7 +17,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
   return [
     "",
     "/products",
-    ...productCollections.filter((c) => catalogueProducts.some((p) => p.collection === c.id)).map((c) => "/products/" + c.id),
+    "/commercial",
+    "/collections",
+    ...projectCollections.map((c) => `/collections/${c.id}`),
+    ...productCollections
+      .filter((c) => catalogueProducts.some((p) => p.collection === c.id))
+      .map((c) => "/products/" + c.id),
     ...catalogueProducts.map(catalogueProductHref),
     "/materials",
     ...groups.map((g) => "/materials/" + g),

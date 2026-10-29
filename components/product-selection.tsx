@@ -5,52 +5,96 @@ import {
   createContext,
   useContext,
   useEffect,
-  useRef,
   useState,
   useSyncExternalStore,
   type ReactNode,
 } from "react";
-import {
-  catalogueProducts,
-  productCollections,
-  productHref,
-} from "@/lib/products";
+import { catalogueProducts } from "@/lib/products";
 
-const STORAGE_KEY = "glanheim-product-shortlist-v1";
+const STORAGE_KEY = "glanheim-product-shortlist-v2";
+const LEGACY_STORAGE_KEY = "glanheim-product-shortlist-v1";
 const LIMIT = 40;
-const EMPTY: string[] = [];
+const FIELD_LIMITS = { quantity: 60, measurements: 1200, notes: 1200 } as const;
+export type EnquiryLineItem = {
+  id: string;
+  quantity: string;
+  measurements: string;
+  notes: string;
+};
+type ItemPatch = Partial<
+  Pick<EnquiryLineItem, "quantity" | "measurements" | "notes">
+>;
+type Snapshot = { items: EnquiryLineItem[]; ready: boolean };
+const EMPTY: Snapshot = { items: [], ready: false };
 const validIds = new Set(catalogueProducts.map((product) => product.id));
-let savedIds: string[] = EMPTY;
+let saved: Snapshot = EMPTY;
 const listeners = new Set<() => void>();
 function subscribe(listener: () => void) {
   listeners.add(listener);
-  return () => listeners.delete(listener);
+  return () => {
+    listeners.delete(listener);
+  };
 }
-function normalise(value: unknown): string[] {
-  return Array.isArray(value)
-    ? [
-        ...new Set(
-          value.filter(
-            (id): id is string => typeof id === "string" && validIds.has(id),
-          ),
-        ),
-      ].slice(0, LIMIT)
-    : [];
+function boundedText(value: unknown, maximum: number) {
+  return typeof value === "string"
+    ? value
+        .replace(/[\u0000-\u0008\u000B\u000C\u000E-\u001F\u007F]/g, "")
+        .slice(0, maximum)
+    : "";
 }
-function readSavedIds() {
+function normalise(value: unknown): EnquiryLineItem[] {
+  if (!Array.isArray(value)) return [];
+  const seen = new Set<string>();
+  const result: EnquiryLineItem[] = [];
+  for (const raw of value) {
+    if (result.length >= LIMIT) break;
+    if (!raw || typeof raw !== "object" || Array.isArray(raw)) continue;
+    const item = raw as Record<string, unknown>;
+    if (
+      typeof item.id !== "string" ||
+      !validIds.has(item.id) ||
+      seen.has(item.id)
+    )
+      continue;
+    seen.add(item.id);
+    result.push({
+      id: item.id,
+      quantity: boundedText(item.quantity, FIELD_LIMITS.quantity),
+      measurements: boundedText(item.measurements, FIELD_LIMITS.measurements),
+      notes: boundedText(item.notes, FIELD_LIMITS.notes),
+    });
+  }
+  return result;
+}
+function readSavedItems(): EnquiryLineItem[] {
   try {
-    return normalise(JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]"));
+    const current = localStorage.getItem(STORAGE_KEY);
+    if (current !== null) {
+      const parsed: unknown = JSON.parse(current);
+      if (!parsed || typeof parsed !== "object" || Array.isArray(parsed))
+        return [];
+      const value = parsed as Record<string, unknown>;
+      return value.version === 2 ? normalise(value.items) : [];
+    }
+    const legacy: unknown = JSON.parse(
+      localStorage.getItem(LEGACY_STORAGE_KEY) || "[]",
+    );
+    return normalise(Array.isArray(legacy) ? legacy.map((id) => ({ id })) : []);
   } catch {
     return [];
   }
 }
-function updateStore(ids: string[], persist = true) {
-  savedIds = normalise(ids);
+function updateStore(items: EnquiryLineItem[], persist = true) {
+  saved = { items: normalise(items), ready: true };
   if (persist) {
     try {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(savedIds));
+      localStorage.setItem(
+        STORAGE_KEY,
+        JSON.stringify({ version: 2, items: saved.items }),
+      );
+      localStorage.removeItem(LEGACY_STORAGE_KEY);
     } catch {
-      // A private browser can still keep this session's selections in memory.
+      // Browsers that block storage can still keep this session's enquiry in memory.
     }
   }
   listeners.forEach((notify) => notify());
@@ -58,9 +102,14 @@ function updateStore(ids: string[], persist = true) {
 
 type Selection = {
   ids: string[];
+  items: EnquiryLineItem[];
+  ready: boolean;
   toggle: (id: string) => void;
   has: (id: string) => boolean;
+  remove: (id: string) => void;
+  updateItem: (id: string, patch: ItemPatch) => void;
   clear: () => void;
+  enquiryHref: string;
 };
 const SelectionContext = createContext<Selection | null>(null);
 
@@ -69,146 +118,107 @@ export function ProductSelectionProvider({
 }: {
   children: ReactNode;
 }) {
-  const ids = useSyncExternalStore(
+  const snapshot = useSyncExternalStore(
     subscribe,
-    () => savedIds,
+    () => saved,
     () => EMPTY,
   );
   const [notice, setNotice] = useState("");
-  const [open, setOpen] = useState(false);
-  const reviewButton = useRef<HTMLButtonElement>(null);
   useEffect(() => {
-    updateStore(readSavedIds(), false);
+    // Restore before writing so a reload never replaces a saved draft with an empty one.
+    updateStore(readSavedItems());
     function sync(event: StorageEvent) {
-      if (event.key === STORAGE_KEY || event.key === null) {
-        updateStore(readSavedIds(), false);
-      }
+      if (event.key === STORAGE_KEY || event.key === null)
+        updateStore(readSavedItems(), false);
     }
     window.addEventListener("storage", sync);
     return () => window.removeEventListener("storage", sync);
   }, []);
-  useEffect(() => {
-    if (!open) return;
-    function escape(event: KeyboardEvent) {
-      if (event.key === "Escape") {
-        setOpen(false);
-        reviewButton.current?.focus();
-      }
-    }
-    document.addEventListener("keydown", escape);
-    return () => document.removeEventListener("keydown", escape);
-  }, [open]);
 
+  function remove(id: string) {
+    updateStore(saved.items.filter((item) => item.id !== id));
+    setNotice("");
+  }
   function toggle(id: string) {
     if (!validIds.has(id)) return;
-    if (savedIds.includes(id)) {
-      updateStore(savedIds.filter((selected) => selected !== id));
-      setNotice("");
-    } else if (savedIds.length >= LIMIT) {
+    if (saved.items.some((item) => item.id === id)) {
+      remove(id);
+    } else if (saved.items.length >= LIMIT) {
       setNotice(
-        "Your enquiry holds up to 40 selections. Send this package first, or remove a selection to add another.",
+        "Your enquiry holds up to 40 selections. Continue with this package first, or remove a selection to add another.",
       );
-      setOpen(true);
     } else {
-      updateStore([...savedIds, id]);
+      updateStore([
+        ...saved.items,
+        { id, quantity: "", measurements: "", notes: "" },
+      ]);
       setNotice("");
     }
+  }
+  function updateItem(id: string, patch: ItemPatch) {
+    if (!saved.items.some((item) => item.id === id)) return;
+    updateStore(
+      saved.items.map((item) =>
+        item.id === id
+          ? {
+              ...item,
+              quantity:
+                patch.quantity === undefined
+                  ? item.quantity
+                  : boundedText(patch.quantity, FIELD_LIMITS.quantity),
+              measurements:
+                patch.measurements === undefined
+                  ? item.measurements
+                  : boundedText(patch.measurements, FIELD_LIMITS.measurements),
+              notes:
+                patch.notes === undefined
+                  ? item.notes
+                  : boundedText(patch.notes, FIELD_LIMITS.notes),
+            }
+          : item,
+      ),
+    );
   }
   function clear() {
     updateStore([]);
-    setOpen(false);
     setNotice("");
   }
-  const selections = ids
-    .map((id) => catalogueProducts.find((product) => product.id === id))
-    .filter((product) => product !== undefined);
-  const enquiryHref = `/request-pricing?selection=${encodeURIComponent(ids.join(","))}`;
-
+  const ids = snapshot.items.map((item) => item.id);
+  const enquiryHref = `/request-pricing?selection=${encodeURIComponent(ids.join(","))}&from=basket`;
   return (
     <SelectionContext.Provider
-      value={{ ids, toggle, has: (id) => ids.includes(id), clear }}
+      value={{
+        ids,
+        items: snapshot.items,
+        ready: snapshot.ready,
+        toggle,
+        has: (id) => ids.includes(id),
+        remove,
+        updateItem,
+        clear,
+        enquiryHref,
+      }}
     >
       {children}
       {ids.length > 0 && (
-        <aside
-          className={`ps-tray${open ? " ps-open" : ""}`}
-          aria-label="Your product enquiry shortlist"
-        >
+        <aside className="ps-tray" aria-label="Your product enquiry shortlist">
           <div className="ps-bar">
             <span className="ps-count" role="status" aria-live="polite">
               {ids.length} {ids.length === 1 ? "selection" : "selections"} in
-              your package
+              your enquiry
             </span>
-            <button
-              ref={reviewButton}
-              className="ps-review"
-              type="button"
-              aria-expanded={open}
-              aria-controls="product-shortlist-review"
-              onClick={() => setOpen(!open)}
-            >
-              {open ? "Close selection list" : "Review selections"}
-              <span aria-hidden="true">{open ? " −" : " +"}</span>
-            </button>
-            <Link
-              className="ps-enquire"
-              href={enquiryHref}
-              onClick={() => setOpen(false)}
-            >
-              Enquire about selections <span aria-hidden="true">↗</span>
+            <Link className="ps-review" href="/enquiry">
+              View enquiry <span aria-hidden="true">↗</span>
+            </Link>
+            <Link className="ps-enquire" href={enquiryHref}>
+              Continue enquiry <span aria-hidden="true">↗</span>
             </Link>
           </div>
-          <div
-            id="product-shortlist-review"
-            className="ps-panel"
-            hidden={!open}
-          >
-            <div className="ps-panel-heading">
-              <h2>Your project selections</h2>
-              <button className="ps-clear" type="button" onClick={clear}>
-                Clear all
-              </button>
-            </div>
-            {notice && (
-              <p className="ps-notice" role="alert">
-                {notice}
-              </p>
-            )}
-            <ul className="ps-list">
-              {selections.map((product) => (
-                <li key={product.id}>
-                  <div>
-                    <Link
-                      href={productHref(product)}
-                      onClick={() => setOpen(false)}
-                    >
-                      {product.name}
-                    </Link>
-                    <span>
-                      {
-                        productCollections.find(
-                          (collection) => collection.id === product.collection,
-                        )?.name
-                      }
-                      {product.code ? ` · ${product.code}` : ""}
-                      {product.variant ? ` · ${product.variant}` : ""}
-                    </span>
-                  </div>
-                  <button
-                    type="button"
-                    onClick={() => toggle(product.id)}
-                    aria-label={`Remove ${product.name}${product.code ? ` ${product.code}` : ""} from enquiry`}
-                  >
-                    Remove
-                  </button>
-                </li>
-              ))}
-            </ul>
-            <p className="ps-help">
-              Your references carry into the project enquiry. Final
-              specifications and supply scope are confirmed with your brief.
+          {notice && (
+            <p className="ps-notice" role="alert">
+              {notice}
             </p>
-          </div>
+          )}
         </aside>
       )}
     </SelectionContext.Provider>

@@ -23,7 +23,7 @@ export async function POST(req: NextRequest) {
       throw new EnquiryError(403, "Please submit from this website.");
     if (!req.headers.get("content-type")?.startsWith("application/json"))
       throw new EnquiryError(415, "JSON submission required.");
-    if (Number(req.headers.get("content-length") || 0) > 24000)
+    if (Number(req.headers.get("content-length") || 0) > 131072)
       throw new EnquiryError(
         413,
         "Enquiry is too long. Please use a document-sharing link.",
@@ -36,7 +36,7 @@ export async function POST(req: NextRequest) {
       const r = await reader.read();
       if (r.done) break;
       size += r.value.byteLength;
-      if (size > 24000) {
+      if (size > 131072) {
         await reader.cancel();
         throw new EnquiryError(413, "Enquiry is too long.");
       }
