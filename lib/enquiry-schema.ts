@@ -70,8 +70,8 @@ export const enquirySchema = z
       .array(z.enum(packageOptions))
       .min(1, "Choose at least one material package")
       .max(14),
-    selectedProduct: text(300),
-    selectedCategory: text(200),
+    selectedProduct: text(12000),
+    selectedCategory: text(1000),
     pricingPurpose: z.enum(pricingOptions, {
       error: "Select a pricing purpose",
     }),
@@ -137,7 +137,7 @@ export const labels: Record<string, string> = {
   tenderDate: "Tender closing date",
   deliveryDate: "Required delivery date",
   packages: "Material packages",
-  selectedProduct: "Selected sourcing profile",
+  selectedProduct: "Selected products and references",
   selectedCategory: "Selected category",
   pricingPurpose: "Pricing purpose",
   scope: "Scope description",

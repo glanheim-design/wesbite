@@ -4,7 +4,7 @@ import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 const links = [
-  ["Materials", "/materials"],
+  ["Collections", "/products"],
   ["Project packages", "/project-packages"],
   ["Procurement", "/procurement"],
   ["About us", "/about"],

@@ -1,3 +1,4 @@
+import { ConstructionStages } from "@/components/product-editorial";
 import { supplyCommitment } from "@/lib/supply";
 import {
   AboutBusiness,
@@ -91,6 +92,7 @@ export default async function InfoPage({
       </PageIntro>
       {page === "project-packages" && (
         <>
+          <div className="collection-site"><ConstructionStages /></div>
           <section className="container detail-grid">
             <Architecture />
             <div>

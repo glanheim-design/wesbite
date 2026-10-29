@@ -1,3 +1,4 @@
+import { productCollections } from "@/lib/products";
 import { supplyCommitment } from "@/lib/supply";
 import { getCategoryArtwork } from "@/lib/artwork";
 import { Questions } from "@/components/business-sections";
@@ -199,6 +200,7 @@ export default async function Materials({ params }: Props) {
           <Architecture {...getCategoryArtwork(cat)} />
           <div>
             <h2>Your project package</h2>
+            <p><Link className="text-link" href="/products">Browse individual products and original catalogue references ↗</Link></p>
             <p>
               {supplyCommitment} Material packages are coordinated around your
               drawings, specifications and project programme.
@@ -266,6 +268,7 @@ export default async function Materials({ params }: Props) {
           ))}
         </nav>
         <p className="catalogue-notice">{supplyCommitment}</p>
+        <p><Link className="text-link" href="/products">Browse the {productCollections.length} product collections ↗</Link></p>
         <Catalogue group={group} categories={categories} />
       </section>
       <Questions

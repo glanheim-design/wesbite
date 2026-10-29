@@ -1,11 +1,13 @@
 import type { Metadata, Viewport } from "next";
 import Link from "next/link";
 import Image from "next/image";
+import { ProductSelectionProvider } from "@/components/product-selection";
 import Header from "@/components/header";
 import PageExperience from "@/components/page-experience";
 import { Architecture } from "@/components/ui";
 import { siteUrl } from "@/lib/site";
 import "./globals.css";
+import "./products.css";
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
@@ -36,6 +38,7 @@ export default function RootLayout({
         <a className="skip-link" href="#main">
           Skip to content
         </a>
+        <ProductSelectionProvider>
         <Header />
         <main id="main">{children}</main>
         <PageExperience />
@@ -68,7 +71,8 @@ export default function RootLayout({
               </a>
             </div>
             <nav className="footer-menu" aria-label="Footer">
-              <Link href="/materials">Materials</Link>
+              <Link href="/products">Product collections</Link>
+              <Link href="/materials">Material sourcing</Link>
               <Link href="/project-packages">Project packages</Link>
               <Link href="/procurement">Procurement</Link>
               <Link href="/about">About us</Link>
@@ -83,6 +87,7 @@ export default function RootLayout({
             </div>
           </div>
         </footer>
+        </ProductSelectionProvider>
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{

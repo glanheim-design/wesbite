@@ -1,5 +1,6 @@
 "use client";
 import Link from "next/link";
+import { selectionFromQuery, selectionSummary, productCollections } from "@/lib/products";
 import { useSearchParams, useRouter } from "next/navigation";
 import { useRef, useState } from "react";
 import {
@@ -72,18 +73,19 @@ export default function EnquiryForm({
 }) {
   const params = useSearchParams();
   const router = useRouter();
+  const selectedProducts = selectionFromQuery(params.get("selection"));
+  const selectedCollections = productCollections.filter((c) => selectedProducts.some((p) => p.collection === c.id));
   const [values, setValues] = useState<FormValues>(() => ({
     ...defaults(),
     submissionId,
     startedAt,
-    selectedProduct: (params.get("product") || "").slice(0, 300),
+    selectedProduct: (selectedProducts.length ? selectionSummary(selectedProducts) : params.get("product") || "").slice(0, 12000),
     position: (params.get("role") || "").slice(0, 120),
-    packages: params
-      .getAll("material")
+    packages: [...new Set([...params.getAll("material"), ...selectedCollections.map((c) => c.materialPackage)])]
       .filter((v): v is (typeof packageOptions)[number] =>
         packageOptions.includes(v as (typeof packageOptions)[number]),
       ),
-    selectedCategory: (params.get("package") || "").slice(0, 200),
+    selectedCategory: (selectedCollections.length ? selectedCollections.map((c) => c.name).join(", ") : params.get("package") || "").slice(0, 1000),
   }));
   const [step, setStep] = useState(0);
   const [errors, setErrors] = useState<Record<string, string>>({});
@@ -416,7 +418,7 @@ export default function EnquiryForm({
             </fieldset>
             {values.selectedProduct && (
               <p className="note-box">
-                Selected profile: {values.selectedProduct}
+                Selected products: <span style={{ whiteSpace: "pre-line" }}>{values.selectedProduct}</span>
               </p>
             )}
             {values.selectedCategory && (

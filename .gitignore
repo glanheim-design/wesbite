@@ -9,3 +9,6 @@ test-results/
 
 # Local design inspection output; the installed Taste skill and its lockfile are retained.
 .taste-skill/
+
+# Catalogue extraction intermediates and local review screenshots
+work/

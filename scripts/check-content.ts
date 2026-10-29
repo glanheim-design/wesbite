@@ -1,3 +1,4 @@
+import { catalogueProducts, productCollections } from "../lib/products";
 import { existsSync } from "node:fs";
 import path from "node:path";
 import { catalogueSchema } from "../lib/content";
@@ -34,3 +35,20 @@ for (const category of result.data.categories) {
   }
 }
 console.log("All category image files are present.");
+
+// Real catalogue products are enquiry-only design references, with traceable source pages.
+
+const catalogueIds = new Set<string>();
+const cataloguePaths = new Set<string>();
+for (const p of catalogueProducts) {
+  if (!productCollections.some((c) => c.id === p.collection)) throw new Error(`Unknown collection ${p.collection}`);
+  if (catalogueIds.has(p.id)) throw new Error(`Duplicate product ID ${p.id}`);
+  const route = `${p.collection}/${p.slug}`;
+  if (cataloguePaths.has(route)) throw new Error(`Duplicate catalogue route ${route}`);
+  catalogueIds.add(p.id); cataloguePaths.add(route);
+  for (const src of [p.image, ...p.gallery]) if (!existsSync(path.join(process.cwd(), "public", src))) throw new Error(`Missing product image ${src}`);
+  if (/[\u3400-\u9fff]/.test(`${p.name} ${p.description} ${p.category}`)) throw new Error(`Untranslated product ${p.id}`);
+  if (/anewson/i.test(`${p.name} ${p.description} ${p.category}`)) throw new Error(`Supplier copy in product ${p.id}`);
+}
+for (const c of productCollections) if (catalogueProducts.some((p) => p.collection === c.id) && !existsSync(path.join(process.cwd(), "public", c.image))) throw new Error(`Missing collection image ${c.image}`);
+console.log(`Validated ${catalogueProducts.length} enquiry-only catalogue products, unique references, routes, collection images and product galleries.`);
