@@ -1,30 +1,8 @@
 import { getStore } from "@netlify/blobs";
-import type { StoredEnquiry } from "../../lib/enquiry-service";
 export default async function retention() {
   const now = Date.now();
-  let enquiriesDeleted = 0,
-    limitsDeleted = 0;
-  const enquiries = getStore({
-    name: "glanheim-enquiries",
-    consistency: "strong",
-  });
-  for await (const page of enquiries.list({
-    prefix: "enquiries/",
-    paginate: true,
-  })) {
-    for (const { key } of page.blobs) {
-      const record = (await enquiries.get(key, { type: "json" })) as
-        (StoredEnquiry & { retentionHold?: boolean }) | null;
-      if (
-        record &&
-        !record.retentionHold &&
-        Date.parse(record.receivedAt) < now - 90 * 86400000
-      ) {
-        await enquiries.delete(key);
-        enquiriesDeleted++;
-      }
-    }
-  }
+  let limitsDeleted = 0;
+  // Enquiries are retained regardless of inactivity at the business owner’s request.
   const limits = getStore({
     name: "glanheim-rate-limits",
     consistency: "strong",
@@ -39,6 +17,6 @@ export default async function retention() {
     }
   }
   // Counts only; never log enquiry content, links, emails, identifiers or credentials.
-  console.info("Retention completed", { enquiriesDeleted, limitsDeleted });
+  console.info("Retention completed", { limitsDeleted });
 }
 export const config = { schedule: "@daily" };

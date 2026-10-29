@@ -69,3 +69,7 @@ Live Resend delivery, Dropbox uploads and Netlify deployment are separate from l
 ## Subsequent copy preference
 
 The owner requested restoration of the original homepage headline, “Materials without compromise.” The existing layout, typography, green PDF logo and remaining content are retained. This owner-supplied headline takes precedence over the earlier two-word trial headline and the skill’s preferred headline length.
+
+## Launch completion, 29 October 2026
+
+Retained the existing green brand, layouts and typography. Reviewed desktop and mobile privacy page screenshots and shortened legal paragraph measure to 60ch. The legal page intentionally uses text rather than extra photographs or footage: marketing media quotas do not improve reading a privacy policy. Corrected the homepage heading at 320px and kept entrance text fully opaque so contrast remains sufficient during motion. Desktop and mobile navigation/viewport and axe checks passed on focused reruns.

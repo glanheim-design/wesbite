@@ -8,6 +8,7 @@ export default defineConfig([
     ".agents/**",
     ".taste-skill/**",
     ".next/**",
+    ".netlify/**",
     "node_modules/**",
     "next-env.d.ts",
     "playwright-report/**",

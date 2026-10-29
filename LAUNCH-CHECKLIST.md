@@ -1,45 +1,23 @@
-# GLANHEIM launch checklist
+# GLANHEIM launch checks
 
-## Code and local verification
+The website is an enquiry-only service, operated as GLANHEIM in Queensland, Australia. Website and enquiry terms apply; orders, payments and binding supply contracts are agreed separately in writing. The enquiry and privacy inbox is info@glanheim.com. Inactive enquiries remain on file without automatic deletion.
 
-- [ ] Review logo crops, founder copy, editorial design and sourcing categories with the owner.
-- [x] Run content validation, type checking, lint, service tests, production build and desktop/mobile browser tests.
-- [x] Audit production dependencies: zero reported vulnerabilities.
-- [ ] Review actual image rendering, keyboard focus, reduced motion, contrast and screen-reader labels.
-- [x] Inspect final internal links, metadata, sitemap, 404 and image responses.
+## Submission activation
 
-## External configuration — no live integration claimed
+Follow [EMAIL-LAUNCH-SETUP.md](EMAIL-LAUNCH-SETUP.md) if only the receiving mailbox is currently configured.
 
-- [ ] Push the reviewed initial project to the chosen GitHub branch.
-- [ ] Connect Netlify and verify the Next.js adapter and private Blobs stores.
-- [ ] Configure the real domain, www redirect and HTTPS; verify canonical URLs.
-- [ ] Verify Resend sender domain, SPF, DKIM and DMARC. Enter server-only credentials securely.
-- [ ] Confirm the notification recipient is info@glanheim.com.
-- [ ] Generate RATE_LIMIT_SALT; enable enquiries only after business/legal approval.
-- [ ] Complete a real staging enquiry. Check private stored metadata, delivered team email, reference and confirmation cookie; then delete test data.
-- [ ] Test a real provider rejection, retry/idempotency behaviour and rate limit on staging.
-- [ ] Optionally enable and test customer acknowledgement delivery.
-- [ ] Create an owner-managed Dropbox File Request, configure URL and test signed-out upload/permissions; delete test file.
-- [ ] Verify email fallback remains available when upload or enquiry services are unavailable.
-- [ ] Test scheduled retention in staging and separately implement email/Dropbox retention.
-- [ ] Verify Search Console ownership and submit the production sitemap.
+- Configure the Resend API credential, verified sender, private rate-limit secret and enquiry activation in Netlify production runtime settings. Configure secrets securely in the dashboard, never in the repository or chat.
+- Redeploy after changing runtime configuration. Confirm the pricing page no longer displays an unavailable notice.
+- Open the website signed out to verify public access, HTTPS and the canonical domain.
+- Submit a clearly labelled launch enquiry using a genuine monitored email address and complete all required fields and consents.
+- Verify the signed confirmation reference, private enquiry record, delivered team email at info@glanheim.com and matching Resend delivery event. Verify the email Reply-To.
+- Test provider failure and unchanged retries in an isolated staging environment. Service unit tests cover these behaviours with test doubles; these do not prove live delivery.
 
-## Business owner approval
+## Website checks
 
-- [ ] Confirm legal entity and applicable business disclosures.
-- [ ] Approve the generic company founding story, the trial slogan-free logo and the use of supplied brand artwork.
-- [ ] Approve supply-only scope, actual sourcing capability and current category coverage.
-- [ ] Confirm no 24/7, stock, delivery time, supplier agreement or completed-project claims are implied.
-- [ ] Approve enquiry handling staff, private-store access, overseas providers and notification recipients.
-- [ ] Approve retention period, legal-hold handling and privacy contact procedures.
+- Validate content, types, lint and service tests. Check public routes, metadata, mobile layout, navigation, legal links and form validation in a browser.
+- Verify any configured Dropbox File Request from a signed-out browser; confirm uploaders cannot browse files. Without a configured request, use the email request for a secure upload link.
+- Keep product specifications and evidence tied to the exact application. Catalogue sourcing profiles are enquiry-only and must not be presented as verified stock or completed projects.
+- Handle privacy access, correction and deletion requests through the monitored inbox. The daily cleanup deletes only expired security rate-limit records, never enquiry records.
 
-## Legal and technical review
-
-- [ ] Australian legal adviser approves Privacy Policy, Website Terms and Enquiry Terms based on actual operations.
-- [ ] Competent specialist verifies the currently adopted NCC, Queensland requirements and relevant standard editions for intended public claims.
-- [ ] Verify Queensland non-conforming building products obligations across the actual supply chain.
-- [ ] Complete eligibility checks before publishing actual products; exclude prohibited engineered stone.
-- [ ] Validate each evidence statement for its exact product, system and application; obtain document publication permissions.
-- [ ] Confirm technical advice, engineering, certification and installation are not implied as GLANHEIM services.
-
-Do not treat completed code or simulated tests as a live launch sign-off.
+Do not treat local checks as evidence of a delivered live email. Record the actual launch-test reference and delivery result privately after deployment.

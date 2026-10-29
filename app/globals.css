@@ -709,6 +709,9 @@ details p:last-child {
 .legal h2 {
   font-size: 37px;
 }
+.legal p {
+  max-width: 60ch;
+}
 .legal a {
   text-decoration: underline;
 }
@@ -1444,9 +1447,10 @@ details p:last-child {
   }
   .hero-heading {
     gap: 0;
+    grid-template-columns: minmax(0, 1fr);
   }
   .hero-heading h1 {
-    font-size: 52px;
+    font-size: clamp(42px, 13.33vw, 52px);
     max-width: 13ch;
     line-height: 1.03;
   }
@@ -2141,7 +2145,7 @@ h4 {
 }
 @keyframes content-arrival {
   from {
-    opacity: 0.65;
+    opacity: 1;
     transform: translateY(20px);
   }
   to {

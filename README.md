@@ -8,7 +8,7 @@ GLANHEIM is presented as an Australian architectural materials sourcing and supp
 
 ## What is implemented
 
-- All main navigation pages, legal drafts, custom 404 and signed enquiry receipt page.
+- All main navigation pages, website and enquiry terms, privacy policy, custom 404 and signed enquiry receipt page.
 - Four material collections, 18 category pages and 18 **enquiry-only sourcing profiles** with searchable, combinable catalogue filters. These are not invented verified stock products.
 - Primary green-background logo derived from the supplied PDF. The wordmark, intertwined monogram and frame are preserved; the slogan is removed from the logo. The original assets remain available for reverting the trial.
 - Business-led About Us page describes how experience in Australia, New Zealand and the UK shaped the company’s founding and intended approach to clients. No founder name, military biography or Caribbean references appear in the public page.
@@ -101,9 +101,9 @@ A separate Dropbox upload does not submit the pricing form. Customers are told t
 
 The API accepts JSON from the same site only, caps streamed payloads at 24 KB, validates all fields, rejects credential-bearing/non-HTTPS document links, and uses five atomic rate slots per salted client hash per 15-minute window. The salt is private and raw network identifiers are not retained. Rate limiting and honeypot/timing checks reduce spam; monitor real traffic and add platform protection if abuse occurs.
 
-A scheduled daily Netlify function deletes expired rate-limit records and unheld enquiry records older than 90 days. For an ongoing project or legal hold, authorised administrators must set `retentionHold: true` on the private record before that deadline; review holds regularly. This function does **not** erase email or Dropbox copies. The business must separately apply its approved retention schedule to email, Dropbox, provider logs and backups and record deletion requests. Verify the first scheduled run in staging. No customer records should be added to Git.
+A scheduled daily Netlify function deletes only expired security rate-limit records. Enquiries, including inactive enquiries, are retained without automatic expiry at the owner’s instruction. Enquiry emails and separate project documents are also retained. Handle access, correction and deletion requests through info@glanheim.com, assess legal obligations and business needs, and restrict access to authorised staff. No customer records should be added to Git.
 
-Business owner must review provider locations/contracts, access permissions, privacy notice, authorised recipients and retention before activating submissions. Legal drafts intentionally flag this pending review. No privacy certification is claimed.
+Public policies describe GLANHEIM in Queensland, Australia, with info@glanheim.com as the enquiry and privacy contact. Website and enquiry terms do not constitute sales terms; any supply contract requires a separate written agreement. No ABN, registered company status or privacy certification is claimed.
 
 ## 9. Product and content management
 
@@ -159,3 +159,13 @@ The material palette now maps a distinct image to each of its 18 categories. Exa
 At the owner’s instruction, public copy states: “All products supplied by GLANHEIM will be certified for Australian installation and meet the Australian construction standards applicable to their intended use.” The commitment is shared through `lib/supply.ts` and used across the home, company, procurement, package and material pages.
 
 This is the business’s forward-looking supply commitment. Internal product records and evidence controls continue to hold the actual certificate, issuer, scope and application information. No certificate identifiers or specialist approvals have been invented or marked as reviewed without documentation. Product certification is distinguished from the separate service of undertaking project engineering or installation.
+
+## Submission launch verification
+
+For a mailbox-only setup, follow [EMAIL-LAUNCH-SETUP.md](EMAIL-LAUNCH-SETUP.md) to connect Resend, configure the production runtime and verify inbox delivery.
+
+A configured email inbox is separate from the Resend sending integration. Add the server-only Resend credential, verified sender and strong rate-limit secret securely in Netlify’s production environment settings, then enable enquiries and redeploy. Never paste secrets into chat or commit them. The form and endpoint share the same readiness check and remain unavailable until all prerequisites are present.
+
+After deployment, open the public pricing page in a signed-out browser. Complete all six steps with a genuine monitored email address, a clearly identified launch-test brief, one material package and both consent confirmations. Submit once. Confirm the signed receipt and reference, the private stored record, the delivered notification at info@glanheim.com and the matching Resend delivery event. A successful API response proves provider acceptance, not final inbox delivery. Verify Reply-To reaches the submitter. If the public page returns 401, resolve the site access restriction before testing.
+
+If delivery fails after storage, keep the form unchanged and retry. The same submission identifier is reused. When the service is unconfigured the final submit action is disabled and the email fallback remains available. A stalled request times out with a retry message; it never reports false success.

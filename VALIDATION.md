@@ -1,24 +1,13 @@
 # GLANHEIM release validation
 
-Validated on 28 October 2026 in the cloud instance against a local production build.
+Checked on 29 October 2026 against the local development server. No production build was run; deployment validation handles the build.
 
-Passed:
+Content validation passed for all 18 categories, sourcing profiles and image files. TypeScript, ESLint and all nine service/content tests passed. Tests covered validation, consent, missing configuration, rate limits, persistence and notification retries, changed-payload rejection, forged receipts, catalogue publication rules and shared form/API readiness.
 
-- Production build, TypeScript check, ESLint and content validation.
-- All 18 category images exist and are individually mapped to their material applications.
-- Eight enquiry-service/content tests: validation, consent, rate limits, idempotent receipt, missing credentials, provider failure, changed payload rejection, signed receipt integrity and publication guards.
-- 34 desktop/mobile Playwright checks, covering every public route, metadata, responsive overflow, navigation, catalogue filtering, image mapping, package-builder carry-through, company copy, process disclosures, slideshow controls, unconfigured enquiry fallback, simulated responses and signed receipt templates.
-- Automated axe WCAG A/AA checks on the principal marketing and enquiry pages. This is not a claim of complete manual accessibility conformance.
-- Taste source lint: zero failures or warnings. Taste browser inspection: zero failures on Home, About Us and Materials at 1440/768/390 pixels. Defended warnings and visual critique are in `DESIGN-NOTES.md`.
-- Visual review of every final inspector fold and full-page sheet for those three pages.
-- Internal-link crawl: 50 pages, 97 unique internal destinations, zero broken links.
-- No private reviewer/evidence field names found in public JavaScript bundles; no credential-pattern findings in new files.
+The desktop/mobile browser suite passed all 32 applicable scenarios after focused reruns corrected narrow-phone heading overflow and entrance-animation text contrast. Coverage included all public routes, metadata, viewport fit, navigation, catalogue filtering, package carry-through, enquiry validation and disabled submission, legal content, image mapping, upload fallback and API rejection paths. Four scenarios were explicitly skipped: simulated successful submission on two viewports because live configuration was absent, and signed confirmation server checks on two viewports because no production build was available. Service tests verified signed receipt integrity. Automated axe WCAG A/AA checks passed on both viewports after the animation fix; this is not a complete manual accessibility audit.
 
-External release steps still apply:
+Source design lint passed. Desktop and mobile privacy page screenshots were reviewed. The design inspector's picture/video quotas were unsuitable for a text-focused legal page; legal content remained free of decorative media. Paragraph width was reduced for readability. The existing brand and layouts were retained.
 
-- Actual Netlify deployment and domain/HTTPS configuration must be confirmed in the connected Netlify account.
-- Automated enquiry receipt needs genuine Resend sender settings and Netlify private storage; local tests do not establish live email delivery.
-- Dropbox upload buttons use the email fallback until a genuine owner-managed File Request URL is configured.
-- Business disclosures, legal drafts, retention practices and product-specific technical information need the owner’s appropriate review.
+Production runtime settings did not contain the required Resend credential, verified sender, rate-limit secret or enquiry activation. The public pricing URL returned HTTP 401 from this environment. Live storage and Resend delivery were therefore not verified. Activate the service through secure production settings, deploy, verify public access and complete the real-enquiry checks in LAUNCH-CHECKLIST.md before calling online submission operational.
 
-The public company page has no named founder or Caribbean reference. Category images are generated application concepts with provenance in the content records; no visible photo labels or captions are rendered.
+Website and enquiry terms and the privacy policy were completed using the owner's supplied business details and indefinite retention instruction. Enquiries are not automatically deleted; only expired security rate-limit records are cleaned up. No sales contract, ABN or registered-company status was invented.

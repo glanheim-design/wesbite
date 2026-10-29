@@ -1,3 +1,4 @@
+import { enquiriesConfigured } from "@/lib/enquiry-config";
 import { createEnquirySession } from "@/lib/enquiry-service";
 import { Suspense } from "react";
 import EnquiryForm from "@/components/enquiry-form";
@@ -24,13 +25,7 @@ export default function Pricing() {
         <EnquiryForm
           {...createEnquirySession()}
           uploadUrl={uploadLink()}
-          enabled={
-            process.env.ENQUIRIES_ENABLED === "true" &&
-            !!process.env.RESEND_API_KEY &&
-            !!process.env.ENQUIRY_FROM_EMAIL &&
-            !!process.env.RATE_LIMIT_SALT &&
-            process.env.NETLIFY === "true"
-          }
+          enabled={enquiriesConfigured(process.env)}
         />
       </Suspense>
     </>

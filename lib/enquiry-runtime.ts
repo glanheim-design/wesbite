@@ -1,3 +1,4 @@
+import { enquiriesConfigured } from "./enquiry-config";
 import { getStore } from "@netlify/blobs";
 import {
   EnquiryError,
@@ -13,7 +14,7 @@ export function runtimeDependencies(): EnquiryDependencies {
   const limits = () =>
     getStore({ name: "glanheim-rate-limits", consistency: "strong" });
   return {
-    enabled: env.ENQUIRIES_ENABLED === "true",
+    enabled: enquiriesConfigured(env),
     salt: env.RATE_LIMIT_SALT || "",
     sender: env.ENQUIRY_FROM_EMAIL || "",
     recipient: env.BUSINESS_NOTIFICATION_EMAIL || "info@glanheim.com",
