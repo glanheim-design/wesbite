@@ -6,7 +6,7 @@ import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 const links = [
   ["Collections", "/collections"],
-  ["Commercial", "/collections/commercial"],
+  ["Sectors", "/collections/commercial"],
   ["Project packages", "/project-packages"],
   ["Procurement", "/procurement"],
   ["About us", "/about"],
