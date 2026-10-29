@@ -1,16 +1,19 @@
 "use client";
 import Link from "next/link";
 import Image from "next/image";
+import { useProductSelection } from "./product-selection";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 const links = [
-  ["Materials", "/materials"],
+  ["Collections", "/collections"],
+  ["Commercial", "/collections/commercial"],
   ["Project packages", "/project-packages"],
   ["Procurement", "/procurement"],
   ["About us", "/about"],
   ["Contact", "/contact"],
 ];
 export default function Header() {
+  const basket = useProductSelection();
   const [open, setOpen] = useState(false);
   const path = usePathname();
   const toggle = useRef<HTMLButtonElement>(null);
@@ -67,6 +70,13 @@ export default function Header() {
             {name}
           </Link>
         ))}
+        <Link
+          href="/enquiry"
+          className="header-enquiry"
+          onClick={() => setOpen(false)}
+        >
+          Your enquiry{basket.ids.length ? ` (${basket.ids.length})` : ""}
+        </Link>
         <Link
           href="/request-pricing"
           className="header-cta"

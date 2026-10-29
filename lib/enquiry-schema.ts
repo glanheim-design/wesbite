@@ -52,7 +52,7 @@ export const enquirySchema = z
     startedAt: z.number().int().positive(),
     website: text(200).refine((v) => v === "", "Spam check failed"),
     fullName: text(120).min(2, "Enter your full name"),
-    company: text(160).min(2, "Enter your company"),
+    company: text(160),
     position: text(120),
     email: z.email("Enter a valid work email").max(254),
     phone: text(50),
@@ -70,11 +70,31 @@ export const enquirySchema = z
       .array(z.enum(packageOptions))
       .min(1, "Choose at least one material package")
       .max(14),
-    selectedProduct: text(300),
-    selectedCategory: text(200),
+    selectedProduct: text(12000),
+    selectedCategory: text(1000),
     pricingPurpose: z.enum(pricingOptions, {
       error: "Select a pricing purpose",
     }),
+    measurementMethod: z
+      .enum(["Review supplied drawings", "Enter measurements", "Both"])
+      .default("Review supplied drawings"),
+    measurements: text(6000).default(""),
+    items: z
+      .array(
+        z
+          .object({
+            id: z
+              .string()
+              .regex(/^[a-z0-9-]+$/)
+              .max(180),
+            quantity: text(60),
+            measurements: text(1200),
+            notes: text(1200),
+          })
+          .strict(),
+      )
+      .max(40)
+      .default([]),
     scope: text(6000).min(20, "Describe your scope in at least 20 characters"),
     quantity: text(30).refine(
       (v) => !v || (/^\d+(\.\d+)?$/.test(v) && Number(v) > 0),
@@ -112,6 +132,8 @@ export const stepFields: (keyof Enquiry)[][] = [
   [
     "pricingPurpose",
     "scope",
+    "measurementMethod",
+    "measurements",
     "quantity",
     "unit",
     "packageValue",
@@ -127,7 +149,7 @@ export const labels: Record<string, string> = {
   fullName: "Full name",
   company: "Company",
   position: "Position",
-  email: "Work email",
+  email: "Email address",
   phone: "Phone",
   companyWebsite: "Company website",
   projectName: "Project name",
@@ -137,10 +159,13 @@ export const labels: Record<string, string> = {
   tenderDate: "Tender closing date",
   deliveryDate: "Required delivery date",
   packages: "Material packages",
-  selectedProduct: "Selected sourcing profile",
+  selectedProduct: "Selected products and references",
   selectedCategory: "Selected category",
   pricingPurpose: "Pricing purpose",
   scope: "Scope description",
+  measurementMethod: "How should measurements be provided?",
+  measurements: "Measurements and dimension notes",
+  items: "Product schedule",
   quantity: "Approximate quantity",
   unit: "Unit",
   packageValue: "Estimated package value",

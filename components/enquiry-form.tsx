@@ -1,7 +1,15 @@
 "use client";
 import Link from "next/link";
+import { useProductSelection } from "./product-selection";
+import { itemSummary, briefEmail, enquiryBrief } from "@/lib/enquiry-brief";
+import type { EnquiryTransport } from "@/lib/enquiry-config";
+import {
+  selectionFromQuery,
+  selectionSummary,
+  productCollections,
+} from "@/lib/products";
 import { useSearchParams, useRouter } from "next/navigation";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   enquirySchema,
   stepFields,
@@ -45,6 +53,9 @@ function defaults(): FormValues {
     selectedCategory: "",
     pricingPurpose: "",
     scope: "",
+    measurementMethod: "Review supplied drawings",
+    measurements: "",
+    items: [],
     quantity: "",
     unit: "",
     packageValue: "",
@@ -62,29 +73,134 @@ function defaults(): FormValues {
 export default function EnquiryForm({
   uploadUrl,
   enabled,
+  transport = enabled ? "api" : "email",
   submissionId,
   startedAt,
 }: {
   uploadUrl: string | null;
   enabled: boolean;
+  transport?: EnquiryTransport;
   submissionId: string;
   startedAt: number;
 }) {
+  const basket = useProductSelection();
   const params = useSearchParams();
   const router = useRouter();
-  const [values, setValues] = useState<FormValues>(() => ({
+  const selectedProducts = selectionFromQuery(params.get("selection"));
+  const selectedCollections = productCollections.filter((c) =>
+    selectedProducts.some((p) => p.collection === c.id),
+  );
+  const [formValues, setValues] = useState<FormValues>(() => ({
     ...defaults(),
     submissionId,
     startedAt,
-    selectedProduct: (params.get("product") || "").slice(0, 300),
+    selectedProduct: (selectedProducts.length
+      ? selectionSummary(selectedProducts)
+      : params.get("product") || ""
+    ).slice(0, 12000),
     position: (params.get("role") || "").slice(0, 120),
-    packages: params
-      .getAll("material")
-      .filter((v): v is (typeof packageOptions)[number] =>
-        packageOptions.includes(v as (typeof packageOptions)[number]),
-      ),
-    selectedCategory: (params.get("package") || "").slice(0, 200),
+    packages: [
+      ...new Set([
+        ...params.getAll("material"),
+        ...selectedCollections.map((c) => c.materialPackage),
+      ]),
+    ].filter((v): v is (typeof packageOptions)[number] =>
+      packageOptions.includes(v as (typeof packageOptions)[number]),
+    ),
+    selectedCategory: (selectedCollections.length
+      ? selectedCollections.map((c) => c.name).join(", ")
+      : params.get("package") || ""
+    ).slice(0, 1000),
   }));
+  const queryIds = params.get("selection");
+  const basketSource = queryIds === null || params.get("from") === "basket";
+  const chosenIds = basketSource
+    ? basket.ids
+    : selectedProducts.map((p) => p.id);
+  const chosenProducts = selectionFromQuery(chosenIds.join(","));
+  const lineItems = chosenProducts.map(
+    (p) =>
+      basket.items.find((item) => item.id === p.id) || {
+        id: p.id,
+        quantity: "",
+        measurements: "",
+        notes: "",
+      },
+  );
+  const chosenCollections = productCollections.filter((c) =>
+    chosenProducts.some((p) => p.collection === c.id),
+  );
+  const values: FormValues = {
+    ...formValues,
+    items: lineItems,
+    selectedProduct: chosenProducts.length
+      ? selectionSummary(chosenProducts).slice(0, 12000)
+      : basketSource
+        ? ""
+        : formValues.selectedProduct,
+    selectedCategory: chosenCollections.length
+      ? chosenCollections.map((c) => c.name).join(", ")
+      : basketSource
+        ? ""
+        : formValues.selectedCategory,
+  };
+  const [draftLoaded, setDraftLoaded] = useState(false);
+  useEffect(() => {
+    try {
+      const saved = JSON.parse(
+        sessionStorage.getItem("glanheim-enquiry-draft") || "null",
+      );
+      if (saved && typeof saved === "object")
+        setValues(
+          (current) =>
+            Object.fromEntries(
+              Object.entries(current).map(([key, value]) => [
+                key,
+                [
+                  "submissionId",
+                  "startedAt",
+                  "website",
+                  "items",
+                  "selectedProduct",
+                  "selectedCategory",
+                ].includes(key)
+                  ? value
+                  : typeof saved[key] === typeof value
+                    ? saved[key]
+                    : value,
+              ]),
+            ) as FormValues,
+        );
+    } catch {
+      /* A draft is optional. */
+    }
+    setDraftLoaded(true);
+  }, []);
+  useEffect(() => {
+    if (!draftLoaded) return;
+    try {
+      sessionStorage.setItem(
+        "glanheim-enquiry-draft",
+        JSON.stringify(formValues),
+      );
+    } catch {
+      /* The enquiry still works without browser storage. */
+    }
+  }, [formValues, draftLoaded]);
+  const [emailPrepared, setEmailPrepared] = useState(false);
+  const [nativeReceipt, setNativeReceipt] = useState<string | null>(null);
+  function downloadBrief(data: Enquiry) {
+    const url = URL.createObjectURL(
+      new Blob([enquiryBrief(data)], { type: "text/plain;charset=utf-8" }),
+    );
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `GLANHEIM-enquiry-${data.submissionId.slice(0, 8)}.txt`;
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    setTimeout(() => URL.revokeObjectURL(url), 3000);
+  }
   const [step, setStep] = useState(0);
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [failure, setFailure] = useState("");
@@ -131,15 +247,16 @@ export default function EnquiryForm({
       changeStep(step + 1);
       return;
     }
-    if (!enabled) {
-      setFailure(
-        "Online submissions are temporarily unavailable. Please email info@glanheim.com with your project brief.",
-      );
-      return;
-    }
     const all = enquirySchema.safeParse(values);
     if (!all.success) {
       setFailure("Please check all form steps before submitting.");
+      return;
+    }
+    if (transport === "email") {
+      const draft = briefEmail(all.data);
+      downloadBrief(all.data);
+      setEmailPrepared(true);
+      window.location.href = draft.href;
       return;
     }
     setBusy(true);
@@ -148,6 +265,43 @@ export default function EnquiryForm({
     const payload = submittedSnapshot || values;
     if (!submittedSnapshot) setSubmittedSnapshot(values);
     try {
+      if (transport === "netlify") {
+        const parsed = enquirySchema.parse(payload);
+        const encoded = new URLSearchParams({
+          "form-name": "glanheim-project-enquiry",
+          website: parsed.website,
+          submissionId: parsed.submissionId,
+          reference: `GL-${parsed.submissionId.slice(0, 8).toUpperCase()}`,
+          fullName: parsed.fullName,
+          company: parsed.company,
+          email: parsed.email,
+          phone: parsed.phone,
+          projectName: parsed.projectName,
+          enquiry: enquiryBrief(parsed),
+        });
+        const response = await fetch("/__forms.html", {
+          method: "POST",
+          headers: { "Content-Type": "application/x-www-form-urlencoded" },
+          body: encoded.toString(),
+          signal: AbortSignal.timeout(30000),
+        });
+        const responseBody = await response.text();
+        if (
+          !response.ok ||
+          responseBody.includes("GLANHEIM_FORM_DETECTION_ONLY")
+        )
+          throw new Error(
+            "Online receipt could not be confirmed. Download your enquiry below and email it to info@glanheim.com, or retry.",
+          );
+        setNativeReceipt(`GL-${parsed.submissionId.slice(0, 8).toUpperCase()}`);
+        try {
+          sessionStorage.removeItem("glanheim-enquiry-draft");
+        } catch {
+          /* Optional tab draft. */
+        }
+        setBusy(false);
+        return;
+      }
       const res = await fetch("/api/enquiries", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -169,6 +323,11 @@ export default function EnquiryForm({
         throw new Error(
           "Receipt could not be verified. Retry this enquiry or email info@glanheim.com.",
         );
+      }
+      try {
+        sessionStorage.removeItem("glanheim-enquiry-draft");
+      } catch {
+        /* Optional tab draft. */
       }
       router.push("/enquiry-confirmation");
     } catch (e) {
@@ -231,7 +390,8 @@ export default function EnquiryForm({
           <textarea
             {...props}
             rows={5}
-            maxLength={name === "scope" ? 6000 : 1500}
+            maxLength={["scope", "measurements"].includes(name) ? 6000 : 1500}
+            placeholder={placeholder}
           />
         ) : (
           <input
@@ -302,20 +462,17 @@ export default function EnquiryForm({
             enquiry to <a href="mailto:info@glanheim.com">info@glanheim.com</a>.
           </p>
         </noscript>
-        {!enabled && (
+        {transport === "email" && (
           <div className="integration-note">
-            <strong>Online submissions are temporarily unavailable.</strong>
+            <strong>Prepare your enquiry. Send it by email.</strong>
             <p>
-              You can prepare and review your scope below. To send your enquiry
-              now, email{" "}
-              <a
-                className="underline"
-                href="mailto:info@glanheim.com?subject=Project%20pricing%20enquiry"
-              >
+              Your product schedule, measurements and project brief will be
+              prepared together. At the final step, download a copy and open an
+              email to{" "}
+              <a className="underline" href="mailto:info@glanheim.com">
                 info@glanheim.com
               </a>
-              . Include your project name, material requirements and any
-              relevant deadlines.
+              . Attach your drawings and the downloaded brief before sending.
             </p>
           </div>
         )}
@@ -347,7 +504,9 @@ export default function EnquiryForm({
         {step === 0 && (
           <div className="form-grid">
             {field("fullName", { required: true })}
-            {field("company", { required: true })}
+            {field("company", {
+              placeholder: "Optional for residential enquiries",
+            })}
             {field("position")}
             {field("email", { type: "email", required: true })}
             {field("phone", { type: "tel" })}
@@ -414,9 +573,20 @@ export default function EnquiryForm({
                 </p>
               )}
             </fieldset>
+            <p className="note-box">
+              <Link className="text-link" href="/enquiry">
+                View and edit enquiry items ↗
+              </Link>
+              <br />
+              Add quantities, measurements or drawing references for each
+              product, or remove an item.
+            </p>
             {values.selectedProduct && (
               <p className="note-box">
-                Selected profile: {values.selectedProduct}
+                Selected products:{" "}
+                <span style={{ whiteSpace: "pre-line" }}>
+                  {values.selectedProduct}
+                </span>
               </p>
             )}
             {values.selectedCategory && (
@@ -434,6 +604,24 @@ export default function EnquiryForm({
             })}
             {field("alternatives", { options: ["Yes", "No", "Discuss"] })}
             {field("scope", { area: true, required: true })}
+            {field("measurementMethod", {
+              options: [
+                "Review supplied drawings",
+                "Enter measurements",
+                "Both",
+              ],
+            })}
+            {field("measurements", {
+              area: true,
+              placeholder:
+                "Include units. For example: opening D01, 1200 mm W × 2400 mm H; or refer to drawing A201, revision C. Leave dimensions for drawing review if not yet confirmed.",
+            })}
+            <p className="form-description full-width">
+              Enter dimensions here or against each item in your enquiry. You
+              can instead provide drawings in the next step and request a
+              dimension review. Any quantities or dimensions taken from drawings
+              will be confirmed with your project team before supply.
+            </p>
             {field("quantity", { type: "number" })}
             {field("unit", {
               options: [
@@ -512,6 +700,17 @@ export default function EnquiryForm({
         )}
         {step === 5 && (
           <>
+            {values.items.length > 0 && (
+              <section className="review-section">
+                <h3>Item quantities & measurements</h3>
+                <pre className="enquiry-schedule">
+                  {itemSummary(values.items)}
+                </pre>
+                <Link className="text-link" href="/enquiry">
+                  Edit enquiry items ↗
+                </Link>
+              </section>
+            )}
             {steps.slice(0, 5).map((s, i) => (
               <section className="review-section" key={s}>
                 <h3>{s}</h3>
@@ -572,6 +771,35 @@ export default function EnquiryForm({
             )}
           </>
         )}
+        {nativeReceipt && (
+          <div className="form-success" role="status">
+            <h3>Enquiry submitted.</h3>
+            <p>
+              Reference: <strong>{nativeReceipt}</strong>. Your enquiry has been
+              accepted for project review. Keep a copy of the brief for your
+              records.
+            </p>
+            <button
+              type="button"
+              onClick={() => {
+                const data = enquirySchema.safeParse(values);
+                if (data.success) downloadBrief(data.data);
+              }}
+            >
+              Download your enquiry
+            </button>
+          </div>
+        )}
+        {emailPrepared && (
+          <div className="integration-note" role="status">
+            <strong>Your enquiry is ready to send.</strong>
+            <p>
+              Send it from your email app to info@glanheim.com. Attach the
+              downloaded brief and your authorised drawings. Opening a draft
+              does not send the enquiry.
+            </p>
+          </div>
+        )}
         {failure && (
           <div ref={alert} tabIndex={-1} className="form-alert" role="alert">
             <p>{failure}</p>
@@ -585,6 +813,22 @@ export default function EnquiryForm({
               </p>
             )}
           </div>
+        )}
+        {(step === 5 || failure) && (
+          <button
+            type="button"
+            className="enquiry-download"
+            onClick={() => {
+              const parsed = enquirySchema.safeParse(values);
+              if (parsed.success) downloadBrief(parsed.data);
+              else
+                setFailure(
+                  "Complete the required details before downloading the full enquiry.",
+                );
+            }}
+          >
+            Download complete enquiry brief ↓
+          </button>
         )}
         <div className="form-actions">
           {step > 0 ? (
@@ -602,12 +846,14 @@ export default function EnquiryForm({
           <button
             className="button"
             type="submit"
-            disabled={busy || (step === 5 && !enabled)}
+            disabled={busy || !!nativeReceipt || !basket.ready || !draftLoaded}
           >
             {busy
               ? "Sending…"
               : step === 5
-                ? "Submit project for review"
+                ? transport === "email"
+                  ? "Download & open enquiry email"
+                  : "Submit project for review"
                 : "Continue"}
             <span aria-hidden="true">↗</span>
           </button>

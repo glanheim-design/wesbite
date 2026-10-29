@@ -1,10 +1,11 @@
+import { enquiryBrief } from "./enquiry-brief";
 import {
   createHash,
   createHmac,
   randomUUID,
   timingSafeEqual,
 } from "node:crypto";
-import { enquirySchema, labels, type Enquiry } from "./enquiry-schema";
+import { enquirySchema, type Enquiry } from "./enquiry-schema";
 export type StoredEnquiry = {
   reference: string;
   receivedAt: string;
@@ -114,11 +115,7 @@ export function notificationText(e: StoredEnquiry) {
     `GLANHEIM PROJECT ENQUIRY`,
     `Reference: ${e.reference}`,
     `Received: ${e.receivedAt}`,
-    ...Object.entries(e.data)
-      .filter(([k]) => !["submissionId", "startedAt", "website"].includes(k))
-      .map(
-        ([k, v]) => `${labels[k] || k}: ${Array.isArray(v) ? v.join(", ") : v}`,
-      ),
+    enquiryBrief(e.data),
     "Document links are confidential. Do not fetch or forward without project authority.",
   ].join("\n\n");
 }

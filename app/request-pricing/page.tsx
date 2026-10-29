@@ -1,4 +1,4 @@
-import { enquiriesConfigured } from "@/lib/enquiry-config";
+import { enquiryTransport } from "@/lib/enquiry-config";
 import { createEnquirySession } from "@/lib/enquiry-service";
 import { Suspense } from "react";
 import EnquiryForm from "@/components/enquiry-form";
@@ -25,7 +25,8 @@ export default function Pricing() {
         <EnquiryForm
           {...createEnquirySession()}
           uploadUrl={uploadLink()}
-          enabled={enquiriesConfigured(process.env)}
+          enabled={enquiryTransport(process.env) !== "email"}
+          transport={enquiryTransport(process.env)}
         />
       </Suspense>
     </>

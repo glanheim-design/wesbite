@@ -1,3 +1,5 @@
+import ProjectCollectionPreview from "@/components/project-collection-preview";
+import { ConstructionStages } from "@/components/product-editorial";
 import { supplyCommitment } from "@/lib/supply";
 import {
   AboutBusiness,
@@ -91,6 +93,10 @@ export default async function InfoPage({
       </PageIntro>
       {page === "project-packages" && (
         <>
+          <div className="collection-site">
+            <ProjectCollectionPreview />
+            <ConstructionStages />
+          </div>
           <section className="container detail-grid">
             <Architecture />
             <div>
@@ -344,13 +350,15 @@ export default async function InfoPage({
               </p>
               <h2>Service providers and storage</h2>
               <p>
-                The website uses Netlify for hosting and private enquiry
-                metadata storage, and Resend for transactional email. Dropbox
-                uploads, if configured, are handled separately by Dropbox. These
-                providers may process information outside Australia, including
-                in the United States. Information is handled under their service
-                arrangements and privacy policies. Only share personal
-                information needed for your enquiry.
+                The website uses Netlify for hosting and private enquiry capture
+                and storage, with optional Resend transactional email where
+                configured. Netlify form email notifications are configured
+                separately. Dropbox uploads, if configured, are handled
+                separately by Dropbox. These providers may process information
+                outside Australia, including in the United States. Information
+                is handled under their service arrangements and privacy
+                policies. Only share personal information needed for your
+                enquiry.
               </p>
               <h2>Document handling</h2>
               <p>
@@ -391,9 +399,13 @@ export default async function InfoPage({
               <p>
                 The website uses a temporary cookie to show your enquiry
                 confirmation for one hour after successful submission. We do not
-                use advertising cookies or analytics. Temporary security records
-                use hashed network identifiers rather than storing raw IP
-                addresses.
+                use advertising cookies or analytics. Your product selections,
+                quantities and item notes are saved in this browser until you
+                clear them. Contact details and unfinished form fields are kept
+                in this tab for enquiry preparation and removed after confirmed
+                online submission. You can clear browser storage to remove local
+                drafts. Temporary security records use hashed network
+                identifiers rather than storing raw IP addresses.
               </p>
             </>
           ) : page === "terms" ? (

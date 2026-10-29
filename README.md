@@ -169,3 +169,14 @@ A configured email inbox is separate from the Resend sending integration. Add th
 After deployment, open the public pricing page in a signed-out browser. Complete all six steps with a genuine monitored email address, a clearly identified launch-test brief, one material package and both consent confirmations. Submit once. Confirm the signed receipt and reference, the private stored record, the delivered notification at info@glanheim.com and the matching Resend delivery event. A successful API response proves provider acceptance, not final inbox delivery. Verify Reply-To reaches the submitter. If the public page returns 401, resolve the site access restriction before testing.
 
 If delivery fails after storage, keep the form unchanged and retry. The same submission identifier is reused. When the service is unconfigured the final submit action is disabled and the email fallback remains available. A stalled request times out with a retry message; it never reports false success.
+
+
+## Product catalogue expansion
+
+The approved GLANHEIM catalogue experience is documented in [CATALOGUE-NOTES.md](CATALOGUE-NOTES.md). The site now includes 1,045 enquiry-only product/design references across nine collections and 82 categories, individual product pages, original code search and a persistent product shortlist that prefills the enquiry form. Original supplier advertising is not rendered. The oversized railing/staircase attachment remains pending a compressed or split copy. Production builds use Next.js’s supported webpack pipeline because Turbopack’s CSS worker cannot bind its local socket in this cloud runtime.
+
+## Netlify Forms and project collections
+
+The current site adds the railing/staircase range, bringing the enquiry-only catalogue to **1,197 entries across ten product families**. Explore it through Commercial, Residential, Fit-out, Exterior, Interior and Project packages. The editable `/enquiry` basket retains quantities, measurement notes and product references before the project form.
+
+Netlify Forms provides native intake when Resend is not connected. In Netlify, enable form detection if it is off, deploy the updated site, and open **Forms → glanheim-project-enquiry → notification settings** to add **info@glanheim.com**. The native notification is separate from the optional `BUSINESS_NOTIFICATION_EMAIL` variable. Confirm a real form record and email arrival before declaring live notifications operational. A Netlify deploy-credit pause must be resolved before the new site can publish.
