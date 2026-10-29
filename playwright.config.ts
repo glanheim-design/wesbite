@@ -7,7 +7,7 @@ export default defineConfig({
   retries: 0,
   reporter: "list",
   use: {
-    baseURL: "http://127.0.0.1:3000",
+    baseURL: process.env.PLAYWRIGHT_BASE_URL || "http://127.0.0.1:8889",
     trace: "retain-on-failure",
     launchOptions: {
       executablePath:

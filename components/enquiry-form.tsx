@@ -131,6 +131,12 @@ export default function EnquiryForm({
       changeStep(step + 1);
       return;
     }
+    if (!enabled) {
+      setFailure(
+        "Online submissions are temporarily unavailable. Please email info@glanheim.com with your project brief.",
+      );
+      return;
+    }
     const all = enquirySchema.safeParse(values);
     if (!all.success) {
       setFailure("Please check all form steps before submitting.");
@@ -146,18 +152,32 @@ export default function EnquiryForm({
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
+        signal: AbortSignal.timeout(30000),
       });
       const json = await res.json();
       if (!res.ok) {
         if (json.fields) setErrors(json.fields);
+        if ([400, 403, 413, 415, 429].includes(res.status)) {
+          setSubmittedSnapshot(null);
+        }
         throw new Error(json.error || "Your enquiry could not be confirmed.");
+      }
+      if (
+        typeof json.reference !== "string" ||
+        !/^GL-\d{4}-[A-F0-9]{8}$/.test(json.reference)
+      ) {
+        throw new Error(
+          "Receipt could not be verified. Retry this enquiry or email info@glanheim.com.",
+        );
       }
       router.push("/enquiry-confirmation");
     } catch (e) {
       setFailure(
-        e instanceof Error
-          ? e.message
-          : "Connection failed. Please try again or email our team.",
+        e instanceof Error && ["TimeoutError", "AbortError"].includes(e.name)
+          ? "Confirmation is taking too long. Retry the same enquiry or email info@glanheim.com. Your enquiry may already be saved."
+          : e instanceof Error
+            ? e.message
+            : "Connection failed. Please try again or email our team.",
       );
       setTimeout(() => alert.current?.focus(), 0);
       setBusy(false);
@@ -269,10 +289,22 @@ export default function EnquiryForm({
           info@glanheim.com ↗
         </a>
       </aside>
-      <form className="enquiry-form" noValidate onSubmit={submit}>
+      <form
+        className="enquiry-form"
+        method="post"
+        action="/api/enquiries"
+        noValidate
+        onSubmit={submit}
+      >
+        <noscript>
+          <p className="form-alert">
+            JavaScript is required for this project form. Please email your
+            enquiry to <a href="mailto:info@glanheim.com">info@glanheim.com</a>.
+          </p>
+        </noscript>
         {!enabled && (
           <div className="integration-note">
-            <strong>Online submission is awaiting activation.</strong>
+            <strong>Online submissions are temporarily unavailable.</strong>
             <p>
               You can prepare and review your scope below. To send your enquiry
               now, email{" "}
@@ -282,8 +314,8 @@ export default function EnquiryForm({
               >
                 info@glanheim.com
               </a>
-              . This form will not claim receipt while the service is
-              unconfigured.
+              . Include your project name, material requirements and any
+              relevant deadlines.
             </p>
           </div>
         )}
@@ -501,6 +533,12 @@ export default function EnquiryForm({
                 </dl>
               </section>
             ))}
+            <p className="form-description">
+              Submitting requests a project review. It does not place an order
+              or make a supply contract. Enquiries, including inactive
+              enquiries, remain on file; contact us to request access,
+              correction or deletion.
+            </p>
             <label className="checkbox-label consent">
               <input
                 id="privacy"
@@ -511,9 +549,13 @@ export default function EnquiryForm({
                 aria-describedby={errors.privacy ? "privacy-error" : undefined}
               />
               <span>
-                I acknowledge the{" "}
+                I have read and agree to the{" "}
                 <Link href="/privacy" target="_blank">
                   privacy policy
+                </Link>{" "}
+                ,{" "}
+                <Link href="/terms" target="_blank">
+                  website terms
                 </Link>{" "}
                 and{" "}
                 <Link href="/enquiry-terms" target="_blank">
@@ -557,7 +599,11 @@ export default function EnquiryForm({
           ) : (
             <span />
           )}
-          <button className="button" type="submit" disabled={busy}>
+          <button
+            className="button"
+            type="submit"
+            disabled={busy || (step === 5 && !enabled)}
+          >
             {busy
               ? "Sending…"
               : step === 5

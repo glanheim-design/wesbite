@@ -166,3 +166,22 @@ test("prohibited products and unreviewed compliance claims cannot publish", () =
       false,
     );
 });
+
+test("page and API readiness requires every submission dependency", async () => {
+  const { enquiriesConfigured } = await import("../lib/enquiry-config");
+  const configured = {
+    ENQUIRIES_ENABLED: "true",
+    NETLIFY: "true",
+    RESEND_API_KEY: "test",
+    ENQUIRY_FROM_EMAIL: "test@example.com",
+    RATE_LIMIT_SALT: "test",
+  };
+  assert.equal(enquiriesConfigured(configured), true);
+  for (const key of Object.keys(configured)) {
+    assert.equal(enquiriesConfigured({ ...configured, [key]: "" }), false, key);
+  }
+  assert.equal(
+    enquiriesConfigured({ ...configured, RESEND_API_KEY: "   " }),
+    false,
+  );
+});
